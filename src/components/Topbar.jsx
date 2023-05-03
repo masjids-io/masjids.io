@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import '../styles/editor/components/topbar.css'
+
 import {
   Box,
   FormControlLabel,
@@ -16,23 +18,23 @@ import {
 import lz from "lzutf8";
 import copy from "copy-to-clipboard";
 
+
+
 import { useEditor } from "@craftjs/core";
 
 export const Topbar = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState();
   const [stateToLoad, setStateToLoad] = useState();
-let isEnabled = false
+  let isEnabled = false;
   const { actions, query, enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
   isEnabled = enabled;
 
-
-
-  useEffect(() =>{
-    isEnabled = window.localStorage.getItem("enabled")
-  },[])
+  useEffect(() => {
+    isEnabled = window.localStorage.getItem("enabled");
+  }, []);
 
   const copyCurrentState = () => {
     const json = query.serialize();
@@ -53,25 +55,25 @@ let isEnabled = false
   };
 
   return (
-    <Box px={1} py={1} mt={3} mb={1} bgcolor="#cbe8e7">
-      <Grid container alignItems="center">
-        <Grid item xs>
-          <FormControlLabel
+    <div className="topbar_global_container">
+      <div className="topbar_container_items">
+        <div className="topbar_container_enable">
+          <FormControlLabel //TODO: chang this and style it later
             control={
               <Switch
                 checked={isEnabled}
                 onChange={(_, value) => {
-                  window.localStorage.setItem('enabled', value);
-                  isEnabled = value
+                  window.localStorage.setItem("enabled", value);
+                  isEnabled = value;
                   actions.setOptions((options) => (options.enabled = value));
                 }}
               />
             }
             label="Enable"
           />
-        </Grid>
-        <Grid item>
-          <MaterialButton
+        </div>
+        <div className="topbar_btn_container">
+          <MaterialButton //TODO: make custom buttons later
             onClick={copyCurrentState}
             size="small"
             variant="outlined"
@@ -79,7 +81,8 @@ let isEnabled = false
           >
             Copy & Save to localStorage
           </MaterialButton>
-        </Grid>
+        </div>
+
         <MaterialButton
           className="load-state-btn"
           size="small"
@@ -125,7 +128,7 @@ let isEnabled = false
           onClose={() => setSnackbarMessage(null)}
           message={<span>{snackbarMessage}</span>}
         />
-      </Grid>
-    </Box>
+      </div>{" "}
+    </div>
   );
 };

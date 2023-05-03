@@ -1,0 +1,26 @@
+.topbar_global_container{
+    width: 100%;
+    background-color: rgb(212, 212, 212);
+    padding: .5em;
+}
+.topbar_container_items{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0 5em;
+    align-items: center;
+}
+
+.topbar_container_enable{
+    flex: 3;
+}
+.topbar_btn_container{
+    flex: 2;
+}
+
+.topbar_btn_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
