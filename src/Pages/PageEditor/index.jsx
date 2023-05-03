@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Paper, Grid } from "@mui/material";
 import "../../styles/editor/editor.css";
-import { Toolbox } from "../../components/Toolbox";
-import { SettingsPanel } from "../../components/SettingsPanel";
-import { Topbar } from "../../components/Topbar";
+import { Toolbox } from "../../components/editor/Toolbox";
+import { SettingsPanel } from "../../components/editor/SettingsPanel";
+import { Topbar } from "../../components/editor/Topbar";
 
 import { Container } from "../../components/user/Container";
 import { Button } from "../../components/user/Button";
@@ -31,6 +31,9 @@ const FrameContent = ({ jsonData, editMode }) => {
   const { enabled, actions } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
+  actions.setOptions(
+    (options) => (options.enabled = window.localStorage.getItem("enable"))
+  );
   // Fix Craft.js bug
   useEffect(() => {
     setTimeout(() => {
@@ -60,7 +63,8 @@ export default function PageEditor() {
               <Toolbox />
             </div>
             <div className="editor_container_playground">
-               <FrameContent jsonData={jsonData} />  {/* the background of playground should be zoomable */}
+              <FrameContent jsonData={jsonData} />{" "}
+              {/* the background of playground should be zoomable */}
             </div>
             <div className="editor_container_settings">
               <SettingsPanel />

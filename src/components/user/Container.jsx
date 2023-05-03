@@ -38,6 +38,7 @@ export const ContainerSettings = () => {
           type="color"
           name="color"
           id="color"
+          value={ background}
           onChange={(event) => {
             console.log("background-color: ", event.target.value);
             setProp((props) => (props.background = event.target.value));

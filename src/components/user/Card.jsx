@@ -40,12 +40,7 @@ CardBottom.craft = {
 }
 
 export const Card = ({background, padding = 20}) => {
-  const { enabled } = useEditor(state => {
-    return {
-      enabled: state.options.enabled
-    };
-  });
-  console.log('enabled:', enabled);
+ 
   return (
     <Container background={background} padding={padding}>
       <Element id="text" is={CardTop} canvas>

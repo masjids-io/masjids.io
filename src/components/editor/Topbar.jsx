@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import '../styles/editor/components/topbar.css'
+import "../../styles/editor/components/topbar.css";
 
 import {
   Box,
@@ -18,22 +18,24 @@ import {
 import lz from "lzutf8";
 import copy from "copy-to-clipboard";
 
-
-
 import { useEditor } from "@craftjs/core";
+import { useDispatch, useSelector } from "react-redux";
+ 
 
 export const Topbar = () => {
+  const dispatch = useDispatch()
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState();
   const [stateToLoad, setStateToLoad] = useState();
-  let isEnabled = false;
+  let enableStatus = window.localStorage.getItem("enable") || false
   const { actions, query, enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
-  isEnabled = enabled;
+  let isEnabled = enabled;
 
   useEffect(() => {
-    isEnabled = window.localStorage.getItem("enabled");
+    actions.setOptions((options) => (options.enabled = isEnabled));
+    isEnabled = enableStatus
   }, []);
 
   const copyCurrentState = () => {
@@ -58,19 +60,7 @@ export const Topbar = () => {
     <div className="topbar_global_container">
       <div className="topbar_container_items">
         <div className="topbar_container_enable">
-          <FormControlLabel //TODO: chang this and style it later
-            control={
-              <Switch
-                checked={isEnabled}
-                onChange={(_, value) => {
-                  window.localStorage.setItem("enabled", value);
-                  isEnabled = value;
-                  actions.setOptions((options) => (options.enabled = value));
-                }}
-              />
-            }
-            label="Enable"
-          />
+          
         </div>
         <div className="topbar_btn_container">
           <MaterialButton //TODO: make custom buttons later
