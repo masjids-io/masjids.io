@@ -38,7 +38,6 @@ const ButtonSettings = () => {
       <FormControl component="fieldset">
         <FormLabel component="legend">Color</FormLabel>
         <RadioGroup defaultValue={props.color} onChange={(e) => setProp(props => props.color = e.target.value )}>
-          {/* <FormControlLabel label="Default" value="default" control={<Radio size="small" color="default" />} /> for some reason when color is default, there is an error */}
  
           <FormControlLabel label="Primary" value="primary" control={<Radio size="small" color="primary" />} />
           <FormControlLabel label="Seconday" value="secondary" control={<Radio size="small" color="primary" />} />

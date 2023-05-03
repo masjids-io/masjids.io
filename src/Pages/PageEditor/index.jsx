@@ -31,9 +31,7 @@ const FrameContent = ({ jsonData, editMode }) => {
   const { enabled, actions } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
-  actions.setOptions(
-    (options) => (options.enabled = window.localStorage.getItem("enable"))
-  );
+  
   // Fix Craft.js bug
   useEffect(() => {
     setTimeout(() => {
@@ -54,7 +52,7 @@ export default function PageEditor() {
     <div className="editor_container">
       <Editor
         resolver={{ Card, CardTop, CardBottom, Button, Text, Container }}
-        enabled={false}
+        enabled={true}
       >
         <div className="editor_global_container">
           <Topbar />

@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import toolboxSlice from './features/toolboxSlice';
+import settingsSlice from './features/settingsSlice';
 
 const store = configureStore({
   reducer: {
-    toolbox: toolboxSlice,
+    settings: settingsSlice,
   }
 });
 

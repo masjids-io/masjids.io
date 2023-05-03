@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
-  enabled: true,
+  selected: "",
 };
 
 export const toolboxSlice = createSlice({
-  name: "toolbox",
+  name: "settings",
   initialState,
   reducers: {
     toggle: (state) => {
