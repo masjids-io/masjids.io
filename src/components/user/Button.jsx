@@ -1,60 +1,92 @@
-import React  from "react";
-import {Button as MaterialButton, FormControl, FormLabel, RadioGroup,Radio, FormControlLabel} from "@mui/material";
+import React from "react";
+import {
+  Button as MaterialButton,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+} from "@mui/material";
 
 import { useNode } from "@craftjs/core";
+import { ButtonSettings } from "../editor/settings/Button/ButtonSettings";
 
-export const Button = ({size, variant, color, children, text}) => {
-  const { connectors: {connect, drag} } = useNode();
+export const Button = ({
+  height,
+  width,
+  textAlign,
+  margin,
+  padding,
+  border,
+  borderRadius,
+  paddingTop,
+  paddingBottom,
+  paddingRight,
+  paddingLeft,
+  marginTop,
+  minHeight,
+  maxWidth,
+  marginBottom,
+  marginRight,
+  marginLeft,
+  color,
+  backgroundColor,
+
+  text,
+}) => {
+  const {
+    connectors: { connect, drag },
+  } = useNode();
   return (
-    <MaterialButton ref={ref => connect(drag(ref))} size={size} variant={variant} color={color}>
-      {children ?? text}
-    </MaterialButton>
-  )
-}
-
-const ButtonSettings = () => {
-  const { actions: {setProp}, props } = useNode((node) => ({
-    props: node.data.props
-  }));
-
-  return (
-    <div>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Size</FormLabel>
-        <RadioGroup defaultValue={props.size} onChange={(e) => setProp(props => props.size = e.target.value )}>
-          <FormControlLabel label="Small" value="small" control={<Radio size="small" color="primary" />} />
-          <FormControlLabel label="Medium" value="medium" control={<Radio size="small" color="primary" />} />
-          <FormControlLabel label="Large" value="large" control={<Radio size="small" color="primary" />} />
-        </RadioGroup>
-      </FormControl>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Variant</FormLabel>
-        <RadioGroup defaultValue={props.variant} onChange={(e) => setProp(props => props.variant = e.target.value )}>
-          <FormControlLabel label="Text" value="text" control={<Radio size="small" color="primary" />} />
-          <FormControlLabel label="Outlined" value="outlined" control={<Radio size="small" color="primary" />} />
-          <FormControlLabel label="Contained" value="contained" control={<Radio size="small" color="primary" />} />
-        </RadioGroup>
-      </FormControl>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Color</FormLabel>
-        <RadioGroup defaultValue={props.color} onChange={(e) => setProp(props => props.color = e.target.value )}>
- 
-          <FormControlLabel label="Primary" value="primary" control={<Radio size="small" color="primary" />} />
-          <FormControlLabel label="Seconday" value="secondary" control={<Radio size="small" color="primary" />} />
-        </RadioGroup>
-      </FormControl>
-    </div>
-  )
+    <button
+      ref={(ref) => connect(drag(ref))}
+      style={{
+        textAlign: textAlign,
+        height: height,
+        minHeight: minHeight,
+        maxWidth: maxWidth,
+        width: width,
+        margin: margin,
+        marginTop: marginTop,
+        marginBottom: marginBottom,
+        marginLeft: marginLeft,
+        marginRight: marginRight,
+        padding: padding,
+        backgroundColor: backgroundColor,
+        border: border,
+        borderRadius: borderRadius,
+        paddingTop: paddingTop,
+        paddingBottom: paddingBottom,
+        paddingRight: paddingRight,
+        paddingLeft: paddingLeft,
+      }}
+    >
+      <p style={{ color: color }}>{text}</p>)
+    </button>
+  );
 };
-
+// {children ?? <p style={{color: color}}>{text}</p>}
 Button.craft = {
-  props: { 
-    size: "small", 
-    variant: "contained",
-    color: "primary",
-    text: "Click me"
+  props: {
+    height: "50px",
+    width: "100px",
+    margin: "",
+    border: "1px solid black",
+    textAlign: "center",
+    padding: "",
+    paddingTop: "16px",
+    paddingBottom: "",
+    paddingRight: "",
+    paddingLeft: "",
+    marginTop: "",
+    marginBottom: "",
+    marginRight: "",
+    marginLeft: "",
+    color: "white",
+    backgroundColor: "black",
+    text: "Click me",
   },
   related: {
-    settings: ButtonSettings
-  }
+    settings: ButtonSettings,
+  },
 };

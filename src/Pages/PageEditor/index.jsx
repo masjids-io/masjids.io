@@ -17,7 +17,7 @@ const defaultFrameChildren = // default components when user first loads page
   (
     <Element is={Container} padding={5} background="#eee" canvas>
       <Card />
-      <Button size="small" variant="outlined">
+      <Button backgroundColor={"black"} color={"white"} borderRadius={"5px"}>
         Click
       </Button>
       <Text size="small" text="Hi world!" />

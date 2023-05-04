@@ -66,7 +66,7 @@ function Basic() {
       <div className="basic_toolbox_comp basic_toolbox_btn_container">
         <div
           ref={(ref) =>
-            connectors.create(ref, <Button text="Click me" size="small" />)
+            connectors.create(ref, <Button text="Click me" color={"white"} textAlign={"center"}/>)
           }
         >
         <ButtonIcon width={"44px"}  color={'white'}/>
