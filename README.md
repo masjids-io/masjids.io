@@ -1,1 +1,4 @@
 # masjids.io
+
+
+## color palette

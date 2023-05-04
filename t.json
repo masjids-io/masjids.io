@@ -1,0 +1,161 @@
+{
+  "ROOT": {
+    "type": { "resolvedName": "Container" },
+    "isCanvas": true,
+    "props": { "background": "#eee", "padding": 5 },
+    "displayName": "Container",
+    "custom": {},
+    "hidden": false,
+    "nodes": ["XAieXjV7Y0", "OPjR6slBMs", "gpHFCTfH2S"],
+    "linkedNodes": {}
+  },
+  "S8Ii1jTwxE": {
+    "type": { "resolvedName": "Card" },
+    "isCanvas": false,
+    "props": {},
+    "displayName": "Card",
+    "custom": {},
+    "parent": "ROOT",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "Yd3mqmNyJQ": {
+    "type": { "resolvedName": "Button" },
+    "isCanvas": false,
+    "props": {
+      "size": "small",
+      "variant": "outlined",
+      "color": "primary",
+      "text": "Click me",
+      "children": "Click"
+    },
+    "displayName": "Button",
+    "custom": {},
+    "parent": "ROOT",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "Q2wzevdswy": {
+    "type": { "resolvedName": "Text" },
+    "isCanvas": false,
+    "props": { "text": "Hi world!", "fontSize": 20, "size": "small" },
+    "displayName": "Text",
+    "custom": {},
+    "parent": "ROOT",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "G2GIeW3-ms": {
+    "type": { "resolvedName": "Container" },
+    "isCanvas": true,
+    "props": { "background": "#999", "padding": 2 },
+    "displayName": "Container",
+    "custom": {},
+    "parent": "ROOT",
+    "hidden": false,
+    "nodes": ["c6u2S45rJo"],
+    "linkedNodes": {}
+  },
+  "c6u2S45rJo": {
+    "type": { "resolvedName": "Text" },
+    "isCanvas": false,
+    "props": { "text": "It's me again!", "fontSize": 20, "size": "small" },
+    "displayName": "Text",
+    "custom": {},
+    "parent": "G2GIeW3-ms",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "OPjR6slBMs": {
+    "type": { "resolvedName": "Text" },
+    "isCanvas": false,
+    "props": { "text": "Hi world!", "fontSize": 22, "size": "small" },
+    "displayName": "Text",
+    "custom": {},
+    "parent": "ROOT",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "gpHFCTfH2S": {
+    "type": { "resolvedName": "Container" },
+    "isCanvas": true,
+    "props": { "background": "#999", "padding": 2 },
+    "displayName": "Container",
+    "custom": {},
+    "parent": "ROOT",
+    "hidden": false,
+    "nodes": ["Q0fPi5C43a"],
+    "linkedNodes": {}
+  },
+  "Q0fPi5C43a": {
+    "type": { "resolvedName": "Text" },
+    "isCanvas": false,
+    "props": { "text": "It's me again!", "fontSize": 20, "size": "small" },
+    "displayName": "Text",
+    "custom": {},
+    "parent": "gpHFCTfH2S",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "XAieXjV7Y0": {
+    "type": { "resolvedName": "Card" },
+    "isCanvas": false,
+    "props": {},
+    "displayName": "Card",
+    "custom": {},
+    "parent": "ROOT",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": { "text": "h0qps8V-sw", "buttons": "rwfBcrFAOe" }
+  },
+  "h0qps8V-sw": {
+    "type": { "resolvedName": "CardTop" },
+    "isCanvas": true,
+    "props": {},
+    "displayName": "CardTop",
+    "custom": {},
+    "parent": "XAieXjV7Y0",
+    "hidden": false,
+    "nodes": ["2L9tzwo8la", "6z6Ye4HsPV"],
+    "linkedNodes": {}
+  },
+  "2L9tzwo8la": {
+    "type": { "resolvedName": "Text" },
+    "isCanvas": false,
+    "props": { "text": "Title", "fontSize": 20 },
+    "displayName": "Text",
+    "custom": {},
+    "parent": "h0qps8V-sw",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "6z6Ye4HsPV": {
+    "type": { "resolvedName": "Text" },
+    "isCanvas": false,
+    "props": { "text": "Subtitle", "fontSize": 15 },
+    "displayName": "Text",
+    "custom": {},
+    "parent": "h0qps8V-sw",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  },
+  "rwfBcrFAOe": {
+    "type": { "resolvedName": "CardBottom" },
+    "isCanvas": true,
+    "props": {},
+    "displayName": "CardBottom",
+    "custom": {},
+    "parent": "XAieXjV7Y0",
+    "hidden": false,
+    "nodes": [],
+    "linkedNodes": {}
+  }
+}

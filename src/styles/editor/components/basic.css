@@ -1,0 +1,43 @@
+.basic_toolbox {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+ 
+  background-color: rgb(36, 62, 49);
+}
+
+.toolbox_rendered_two_colomn_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbox_container {
+  height: 100%;
+  background-color: rgb(36, 62, 49);
+}
+
+.basic_toolbox_comp {
+  border: solid 1px rgb(42, 56, 49);
+  background-color: rgb(69, 96, 82);
+  padding: 1.4em;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.basic_toolbox_comp:hover {
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.394);
+}
+
+.element_container {
+  width: 100%;
+}
