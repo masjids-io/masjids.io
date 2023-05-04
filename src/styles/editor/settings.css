@@ -24,10 +24,7 @@
   color: rgb(8, 45, 8);
 }
 
-.global_setting_details {
-  padding: 0.2em 0.3em;
-}
-
+ 
 .global_setting_dimensions__ {
   display: flex;
   flex-direction: row;
@@ -37,7 +34,7 @@
 .global_setting_dimensions{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 10px;
 
@@ -52,4 +49,33 @@
   background-color: rgb(129, 143, 119);
   padding: .2em .2em;
   font-family: 'poppins';
+}
+
+.heigh_input::placeholder {
+  color: #0000008e;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.label{
+  color: white;
+  font-size: 12px;
+  margin-bottom: .5em;
+}
+
+.margin_label{
+  margin-top: 1em;
+  color: white;
+}
+
+.margin_settings_group{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 10px;
+  border: 1px solid rgb(95, 124, 83);
+  padding: .5em;
+  border-radius: 5px;
+  background-color: rgba(61, 97, 61, 0.487);
 }

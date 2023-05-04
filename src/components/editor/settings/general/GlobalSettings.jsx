@@ -34,31 +34,7 @@ export const GlobalSettings = () => {
           <p>Global</p>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="global_setting_details">
-            <p>Size</p>{" "}
-            <RadioGroup
-              defaultValue={props.size}
-              onChange={(e) =>
-                setProp((props) => (props.size = e.target.value))
-              }
-            >
-              <FormControlLabel
-                label="Small"
-                value="small"
-                control={<Radio size="small" color="primary" />}
-              />
-              <FormControlLabel
-                label="Medium"
-                value="medium"
-                control={<Radio size="small" color="primary" />}
-              />
-              <FormControlLabel
-                label="Large"
-                value="large"
-                control={<Radio size="small" color="primary" />}
-              />
-            </RadioGroup>
-          </div>
+          <p>example</p>
         </AccordionDetails>
       </Accordion>
     </div>

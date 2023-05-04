@@ -2,8 +2,29 @@ import React from "react";
 import { Paper, FormControl, FormLabel, Slider } from "@mui/material";
 
 import { useNode } from "@craftjs/core";
+import { ContainerSettings } from "../editor/settings/OneColumn/OneColumnSettings";
 
-export const Container = ({ background, padding = 0, children }) => {
+export const Container = ({
+  height: height,
+  minWidth: minWidth,
+  maxHeight: maxHeight,
+  minHeight: minHeight,
+  maxWidth: maxWidth,
+  width: width,
+  margin: margin,
+  marginTop: marginTop,
+  marginBottom: marginBottom,
+  marginLeft: marginLeft,
+  marginRight: marginRight,
+  padding: padding,
+  paddingTop: paddingTop,
+  paddingBottom: paddingBottom,
+  paddingRight: paddingRight,
+  paddingLeft: paddingLeft,
+  background,
+
+  children,
+}) => {
   const {
     connectors: { connect, drag },
   } = useNode();
@@ -11,8 +32,25 @@ export const Container = ({ background, padding = 0, children }) => {
     <Paper
       ref={(ref) => connect(drag(ref))}
       style={{
-        margin: "5px 0",
         backgroundColor: background,
+        height: height,
+        minWidth: minWidth,
+        maxHeight: maxHeight,
+        minHeight: minHeight,
+        maxWidth: maxWidth,
+        width: width,
+        margin: margin,
+        marginTop: marginTop,
+        marginBottom: marginBottom,
+        marginLeft: marginLeft,
+        marginRight: marginRight,
+        padding: padding,
+
+        paddingTop: paddingTop,
+        paddingBottom: paddingBottom,
+        paddingRight: paddingRight,
+        paddingLeft: paddingLeft,
+
         padding: `${padding}px`,
       }}
     >
@@ -21,45 +59,14 @@ export const Container = ({ background, padding = 0, children }) => {
   );
 };
 
-export const ContainerSettings = () => {
-  const {
-    background,
-    padding,
-    actions: { setProp },
-  } = useNode((node) => ({
-    background: node.data.props.background,
-    padding: node.data.props.padding,
-  }));
-  return (
-    <div>
-      <FormControl fullWidth={true} margin="normal" component="fieldset">
-        <FormLabel component="legend">Background</FormLabel>
-        <input
-          type="color"
-          name="color"
-          id="color"
-          value={ background}
-          onChange={(event) => {
-            console.log("background-color: ", event.target.value);
-            setProp((props) => (props.background = event.target.value));
-          }}
-        />
-      </FormControl>
-      <FormControl fullWidth={true} margin="normal" component="fieldset">
-        <FormLabel component="legend">Padding</FormLabel>
-        <Slider
-          value={padding}
-          onChange={(_, value) => setProp((props) => (props.padding = value))}
-        />
-      </FormControl>
-    </div>
-  );
-};
-
 Container.craft = {
   props: {
+ 
+    height: "100px",
+    width: "100%",
+    padding: "2em",
+
     background: "#ffffff",
-    padding: 3,
   },
   related: {
     settings: ContainerSettings,

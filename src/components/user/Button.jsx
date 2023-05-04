@@ -14,6 +14,10 @@ import { ButtonSettings } from "../editor/settings/Button/ButtonSettings";
 export const Button = ({
   height,
   width,
+  minHeight,
+  maxHeight,
+  maxWidth,
+  minWidth,
   textAlign,
   margin,
   padding,
@@ -24,8 +28,6 @@ export const Button = ({
   paddingRight,
   paddingLeft,
   marginTop,
-  minHeight,
-  maxWidth,
   marginBottom,
   marginRight,
   marginLeft,
@@ -43,6 +45,8 @@ export const Button = ({
       style={{
         textAlign: textAlign,
         height: height,
+        minWidth: minWidth,
+        maxHeight: maxHeight,
         minHeight: minHeight,
         maxWidth: maxWidth,
         width: width,
@@ -69,6 +73,8 @@ export const Button = ({
 Button.craft = {
   props: {
     height: "50px",
+    minHeight: "",
+    maxWidth: "",
     width: "100px",
     margin: "",
     border: "1px solid black",
