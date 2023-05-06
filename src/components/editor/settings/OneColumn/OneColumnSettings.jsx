@@ -2,7 +2,7 @@ import { Paper, FormControl, FormLabel, Slider } from "@mui/material";
 
 import { useNode } from "@craftjs/core";
 import { GlobalSettings } from "../general/GlobalSettings";
-import { Dimension } from "../general/DImension";
+import { Dimension } from "../general/dimension/Dimension";
 
 export const ContainerSettings = () => {
   const {

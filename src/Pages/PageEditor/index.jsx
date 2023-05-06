@@ -4,12 +4,11 @@ import "../../styles/editor/editor.css";
 import { Toolbox } from "../../components/editor/Toolbox";
 import { SettingsPanel } from "../../components/editor/SettingsPanel";
 import { Topbar } from "../../components/editor/Topbar";
-
 import { Container } from "../../components/user/Container";
 import { Button } from "../../components/user/Button";
 import { Card, CardTop, CardBottom } from "../../components/user/Card";
 import { Text } from "../../components/user/Text";
-
+import { Selection } from "../../components/editor/Selection";
 import lz from "lzutf8";
 import { Editor, Frame, Element, useEditor } from "@craftjs/core";
 
@@ -31,7 +30,7 @@ const FrameContent = ({ jsonData, editMode }) => {
   const { enabled, actions } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
-  
+
   // Fix Craft.js bug
   useEffect(() => {
     setTimeout(() => {
@@ -39,6 +38,7 @@ const FrameContent = ({ jsonData, editMode }) => {
       actions.setOptions((options) => (options.enabled = enabled));
     });
   }, []);
+
   return <Frame data={jsonData}>{defaultFrameChildren}</Frame>;
 };
 
@@ -51,17 +51,20 @@ export default function PageEditor() {
   return (
     <div className="editor_container">
       <Editor
+        onRender={Selection}
         resolver={{ Card, CardTop, CardBottom, Button, Text, Container }}
         enabled={true}
       >
-        <div className="editor_global_container">
+        <div className=" editor_global_container">
           <Topbar />
           <div className="editor_container_items">
             <div className="editor_container_toolbox">
               <Toolbox />
             </div>
-            <div className="editor_container_playground">
-              <FrameContent jsonData={jsonData} />{" "}
+            <div className="page-container editor_container_playground">
+               
+                <FrameContent jsonData={jsonData} />
+              
               {/* the background of playground should be zoomable */}
             </div>
             <div className="editor_container_settings">

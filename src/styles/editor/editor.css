@@ -2,6 +2,7 @@
   margin-top: 0;
   height: 100vh;
   width: 100%;
+  overflow: hidden;
 }
 .editor_global_container {
   display: flex;
@@ -18,15 +19,36 @@
 }
 
 .editor_container_toolbox {
-  flex: 1;
+  flex: 2;
   height: 100%;
 }
 
 .editor_container_playground {
-  flex: 4;
+  flex: 6;
   padding: 2em;
 }
 
 .editor_container_settings {
-  flex: 1;
+  flex: 2;
+  overflow: hidden;
+}
+
+
+.selection_container{
+  
+  color: rgb(0, 0, 0);
+  border: 2px dashed rgb(25, 51, 251);
+  position: fixed;
+  display: flex;
+  background-color: transparent;
+  pointer-events: none;
+
+  align-items: center;
+}
+
+.component_name{
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: -25px;
 }

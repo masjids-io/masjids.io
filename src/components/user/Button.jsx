@@ -18,11 +18,12 @@ export const Button = ({
   maxHeight,
   maxWidth,
   minWidth,
+  borderTopLeftRadius,
+  borderTopRightRadius,
+  borderBottomLeftRadius,
+  borderBottomRightRadius,
   textAlign,
-  margin,
-  padding,
   border,
-  borderRadius,
   paddingTop,
   paddingBottom,
   paddingRight,
@@ -33,7 +34,7 @@ export const Button = ({
   marginLeft,
   color,
   backgroundColor,
-
+  opacity,
   text,
 }) => {
   const {
@@ -44,21 +45,25 @@ export const Button = ({
       ref={(ref) => connect(drag(ref))}
       style={{
         textAlign: textAlign,
+        opacity: opacity,
         height: height,
+
+        borderTopLeftRadius: borderTopLeftRadius,
+        borderTopRightRadius: borderTopRightRadius,
+        borderBottomLeftRadius: borderBottomLeftRadius,
+        borderBottomRightRadius: borderBottomRightRadius,
+
         minWidth: minWidth,
         maxHeight: maxHeight,
         minHeight: minHeight,
         maxWidth: maxWidth,
         width: width,
-        margin: margin,
         marginTop: marginTop,
         marginBottom: marginBottom,
         marginLeft: marginLeft,
         marginRight: marginRight,
-        padding: padding,
         backgroundColor: backgroundColor,
         border: border,
-        borderRadius: borderRadius,
         paddingTop: paddingTop,
         paddingBottom: paddingBottom,
         paddingRight: paddingRight,
@@ -72,14 +77,18 @@ export const Button = ({
 // {children ?? <p style={{color: color}}>{text}</p>}
 Button.craft = {
   props: {
+    opacity: 1,
     height: "50px",
+    borderTopLeftRadius: "",
+    borderTopRightRadius: "",
+    borderBottomLeftRadius: "",
+    borderBottomRightRadius: "",
     minHeight: "",
     maxWidth: "",
     width: "100px",
-    margin: "",
     border: "1px solid black",
     textAlign: "center",
-    padding: "",
+
     paddingTop: "16px",
     paddingBottom: "",
     paddingRight: "",

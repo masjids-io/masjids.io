@@ -11,12 +11,12 @@ export const Container = ({
   minHeight: minHeight,
   maxWidth: maxWidth,
   width: width,
-  margin: margin,
+ 
   marginTop: marginTop,
   marginBottom: marginBottom,
   marginLeft: marginLeft,
   marginRight: marginRight,
-  padding: padding,
+ 
   paddingTop: paddingTop,
   paddingBottom: paddingBottom,
   paddingRight: paddingRight,
@@ -39,20 +39,19 @@ export const Container = ({
         minHeight: minHeight,
         maxWidth: maxWidth,
         width: width,
-        margin: margin,
+ 
         marginTop: marginTop,
         marginBottom: marginBottom,
         marginLeft: marginLeft,
         marginRight: marginRight,
-        padding: padding,
+ 
 
         paddingTop: paddingTop,
         paddingBottom: paddingBottom,
         paddingRight: paddingRight,
         paddingLeft: paddingLeft,
 
-        padding: `${padding}px`,
-      }}
+       }}
     >
       {children}
     </Paper>
@@ -64,7 +63,7 @@ Container.craft = {
  
     height: "100px",
     width: "100%",
-    padding: "2em",
+ 
 
     background: "#ffffff",
   },

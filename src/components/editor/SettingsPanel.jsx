@@ -55,17 +55,20 @@ export const SettingsPanel = () => {
       </div>
       {selected.settings && React.createElement(selected.settings)}
 
-      {selected.isDeletable ? (
+      {selected.isDeletable ? 
+      (
         <button
           variant="contained"
           color="inherit"
+          className="delete_button"
           onClick={() => {
             actions.delete(selected.id);
           }}
         >
           Delete
         </button>
-      ) : null}
+      )
+       : null}
     </div>
   ) : (
     <h1>nothing to show</h1>
