@@ -1,4 +1,2 @@
 # masjids.io
-
-
-## color palette
+This repository hosts the frontend code for masjids.io
