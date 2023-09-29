@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@types/node": "20.4.3",
     "@types/react": "18.2.15",
+    "prettier": "^3.0.3",
     "typescript": "5.1.6"
   }
 }
