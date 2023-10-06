@@ -8,6 +8,7 @@ import {
   Group,
   rem,
 } from '@mantine/core';
+import { ContactForm } from '../components/contact';
 import { Navbar } from '../components/navbar';
 
 const HEADER_HEIGHT = rem(60);
@@ -25,6 +26,9 @@ export default function Home() {
       <Container className="box">
         <Center h={724} mx="auto">
           <Box>TO DO</Box>
+        </Center>
+        <Center>
+          <ContactForm></ContactForm>
         </Center>
       </Container>
     </>
