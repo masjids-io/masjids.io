@@ -1,23 +1,21 @@
-import Head from "next/head";
-import { Button, Box, Center, Container, Header, Group, rem } from "@mantine/core";
+import Head from 'next/head';
+import {
+  Button,
+  Box,
+  Center,
+  Container,
+  Header,
+  Group,
+  rem,
+} from '@mantine/core';
+import { Navbar } from '../components/navbar';
 
 const HEADER_HEIGHT = rem(60);
 
 export default function Home() {
   return (
     <>
-      <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mb={120}>
-        <Container fluid>
-          <Group>
-            masjids.io
-          </Group>
-          <Group>
-            <Button radius="xl" h={20}>
-              Sign Up/Login
-            </Button>
-          </Group>
-        </Container>
-      </Header>
+      <Navbar></Navbar>
       <Head>
         <title>masjids.io</title>
         <meta name="description" content="masjids.io home page" />
