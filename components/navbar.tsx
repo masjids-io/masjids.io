@@ -1,16 +1,19 @@
 import {
   createStyles,
-  Header,
-  Group,
-  Button,
-  Divider,
+  rem,
   Box,
   Burger,
+  Button,
+  Divider,
   Drawer,
+  Group,
+  Header,
+  Modal,
   ScrollArea,
-  rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { Login } from './login';
+import { Signup } from './signup';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -52,6 +55,10 @@ const useStyles = createStyles((theme) => ({
 export function Navbar() {
   const [drawerOpen, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
+  const [login_opened, { toggle: login_open, close: login_close }] =
+    useDisclosure(false);
+  const [signup_opened, { toggle: signup_open, close: signup_close }] =
+    useDisclosure(false);
   const { classes, theme } = useStyles();
 
   return (
@@ -75,15 +82,31 @@ export function Navbar() {
           </Group>
 
           <Group className={classes.hiddenMobile}>
+            <Modal
+              opened={login_opened}
+              onClose={login_close}
+              withCloseButton={false}
+            >
+              <Login></Login>
+            </Modal>
             <Button
               variant="gradient"
               gradient={{ from: 'lime', to: 'lime', deg: 0 }}
+              onClick={login_open}
             >
               Log in
             </Button>
+            <Modal
+              opened={signup_opened}
+              onClose={signup_close}
+              withCloseButton={false}
+            >
+              <Signup></Signup>
+            </Modal>
             <Button
               variant="gradient"
               gradient={{ from: 'teal', to: 'teal', deg: 0 }}
+              onClick={signup_open}
             >
               Sign up
             </Button>
