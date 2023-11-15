@@ -1,11 +1,8 @@
 import Head from 'next/head';
 import {
-  Button,
   Box,
   Center,
   Container,
-  Header,
-  Group,
   rem,
 } from '@mantine/core';
 import { ContactForm } from '../components/contact';
