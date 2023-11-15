@@ -1,10 +1,5 @@
 import Head from 'next/head';
-import {
-  Box,
-  Center,
-  Container,
-  rem,
-} from '@mantine/core';
+import { Box, Center, Container, rem } from '@mantine/core';
 import { ContactForm } from '../components/contact';
 import { Navbar } from '../components/navbar';
 
