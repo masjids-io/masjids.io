@@ -1,10 +1,13 @@
+import React, { useState } from 'react';
 import {
+  MantineProvider,
+  Container,
   TextInput,
   Textarea,
-  SimpleGrid,
-  Group,
   Title,
   Button,
+  Group,
+  Text,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
@@ -13,80 +16,75 @@ export function ContactForm() {
     initialValues: {
       name: '',
       email: '',
-      subject: '',
       message: '',
     },
     validate: {
-      name: (value) => value.trim().length < 2,
-      email: (value) => !/^\S+@\S+$/.test(value),
-      subject: (value) => value.trim().length === 0,
-      message: (value) => value.trim().length < 2,
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   });
 
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = async (values) => {
+    // Validate form data
+    if (form.errors.length) {
+      setStatus('Please fix the errors.');
+      return;
+    }
+
+    // Send the form data
+    try {
+      // You can use an external library like `axios` or `fetch` to send the data to a server-side script
+      // for further processing. For this example, we will just simulate sending the data.
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setStatus('Your message has been sent. Thank you!');
+      form.reset();
+    } catch (error) {
+      setStatus('Error sending your message.');
+      console.error(error);
+    }
+  };
+
   return (
-    <form onSubmit={form.onSubmit(() => {})}>
-      <Title
-        order={2}
-        size="h1"
-        style={{ fontFamily: 'Greycliff CF, var(--mantine-font-family)' }}
-        fw={900}
-        ta="center"
-      >
-        Contact Us
-      </Title>
-
-      <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
-        <TextInput
-          label="Name"
-          placeholder="Your name"
-          name="name"
-          size="md"
-          radius="lg"
-          {...form.getInputProps('name')}
-        />
-        <TextInput
-          label="Email"
-          placeholder="Your email"
-          name="email"
-          size="md"
-          radius="lg"
-          {...form.getInputProps('email')}
-        />
-      </SimpleGrid>
-
-      <TextInput
-        label="Subject"
-        placeholder="Subject"
-        mt="md"
-        name="subject"
-        size="md"
-        radius="lg"
-        {...form.getInputProps('subject')}
-      />
-      <Textarea
-        mt="md"
-        label="Message"
-        placeholder="Your message"
-        maxRows={10}
-        minRows={5}
-        autosize
-        name="message"
-        size="md"
-        radius="lg"
-        {...form.getInputProps('message')}
-      />
-
-      <Group justify="center" mt="xl" mb="xl">
-        <Button
-          type="submit"
-          size="md"
-          variant="gradient"
-          gradient={{ from: 'green', to: 'green', deg: 0 }}
-        >
-          Send message
-        </Button>
-      </Group>
-    </form>
+    <MantineProvider>
+      <Container size="lg" py="xl">
+        <Title order={2} align="center" mb="md">
+          Contact Us
+        </Title>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <Group direction="row">
+            <TextInput
+              label="Name"
+              placeholder="Your Name"
+              {...form.getInputProps('name')}
+              required
+            />
+            <TextInput
+              label="Email"
+              placeholder="Your Email"
+              {...form.getInputProps('email')}
+              required
+              error={form.errors.email}
+            />
+          </Group>
+          <Textarea
+            label="Message"
+            placeholder="Your Message..."
+            {...form.getInputProps('message')}
+            required
+          />
+          <Group mt="md" justify="end">
+            <Button type="submit" size="md">
+              Send Message
+            </Button>
+          </Group>
+          {status && (
+            <Text size="sm" color={status.includes('Error') ? 'red' : 'teal'}>
+              {status}
+            </Text>
+          )}
+        </form>
+      </Container>
+    </MantineProvider>
   );
 }
