@@ -53,7 +53,8 @@ export function LandingPage() {
       </Container>
       <Container size="lg" py="xl">
         <Text size="lg" align="center" color="gray">
-          Quickly create a website for your masjid with our interactive drag-and-drop editor.
+          Quickly create a website for your masjid with our interactive
+          drag-and-drop editor.
         </Text>
         <Image
           src="https://t4.ftcdn.net/jpg/03/17/31/99/360_F_317319974_fzB2wFm7HEexuMfQBxzLW2uTfM9jByuh.jpg"
