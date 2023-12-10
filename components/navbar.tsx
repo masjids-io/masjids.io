@@ -74,7 +74,7 @@ export function Navbar() {
               Home
             </a>
             <a href="#" className={classes.link}>
-              Connected Apps
+              Apps
             </a>
             <a href="#" className={classes.link}>
               Documentation
