@@ -52,7 +52,7 @@ export function ContactForm() {
           Contact Us
         </Title>
         <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Group direction="row">
+          <Group>
             <TextInput
               label="Name"
               placeholder="Your Name"
