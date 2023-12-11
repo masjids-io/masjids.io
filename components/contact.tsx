@@ -52,7 +52,7 @@ export function ContactForm() {
           Contact Us
         </Title>
         <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Group direction="row">
+          <Group>
             <TextInput
               label="Name"
               placeholder="Your Name"
@@ -73,7 +73,7 @@ export function ContactForm() {
             {...form.getInputProps('message')}
             required
           />
-          <Group mt="md" justify="end">
+          <Group mt="md">
             <Button type="submit" size="md">
               Send Message
             </Button>
