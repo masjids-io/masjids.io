@@ -73,7 +73,7 @@ export function ContactForm() {
             {...form.getInputProps('message')}
             required
           />
-          <Group mt="md" justify="end">
+          <Group mt="md">
             <Button type="submit" size="md">
               Send Message
             </Button>
