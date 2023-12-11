@@ -73,7 +73,7 @@ export function Navbar() {
             <a href="#" className={classes.link}>
               Home
             </a>
-            <a href="#" className={classes.link}>
+            <a href="/apps" className={classes.link}>
               Apps
             </a>
             <a href="#" className={classes.link}>
@@ -136,7 +136,7 @@ export function Navbar() {
             Home
           </a>
           <a href="#" className={classes.link}>
-            About
+            Apps
           </a>
           <a href="#" className={classes.link}>
             Documentation
