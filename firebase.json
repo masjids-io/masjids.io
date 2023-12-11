@@ -8,7 +8,11 @@
     ],
     "rewrites": [ 
       {
-        "source": "apps",
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/apps{,/**}",
         "destination": "/apps.html"
       } 
     ]
