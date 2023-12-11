@@ -13,7 +13,7 @@
         "destination": "/index.html"
       },
       {
-        "regex": "/apps",
+        "source": "/apps",
         "destination": "/apps.html"
       } 
     ]
