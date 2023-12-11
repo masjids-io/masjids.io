@@ -1,15 +1,8 @@
 import Head from 'next/head';
-import {
-  Button,
-  Box,
-  Center,
-  Container,
-  Header,
-  Group,
-  rem,
-} from '@mantine/core';
+import { Center, Container, rem } from '@mantine/core';
 import { ContactForm } from '../components/contact';
 import { Navbar } from '../components/navbar';
+import { LandingPage } from '../components/landing_page';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -24,9 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container className="box">
-        <Center h={724} mx="auto">
-          <Box>TO DO</Box>
-        </Center>
+        <LandingPage></LandingPage>
         <Center>
           <ContactForm></ContactForm>
         </Center>
