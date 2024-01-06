@@ -59,7 +59,7 @@ const FormInput: FC<FormInputProps> = ({
         disabled={disabled}
         required={required}
         autoComplete={autocomplete}
-        aria-invalid={error ? true : false}
+        aria-invalid={!!error}
         aria-describedby={error ? 'error-message' : null}
         className="mt-1 block w-full px-3 py-2 
         bg-white border border-lime-300 
