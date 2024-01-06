@@ -1,15 +1,10 @@
 import {
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Anchor,
   Paper,
   Title,
-  Text,
   Container,
-  Group,
   Button,
 } from '@mantine/core';
+import FormInput from './form_input';
 
 export function Signup() {
   return (
@@ -17,21 +12,56 @@ export function Signup() {
       <Title ta="center">Create an account today!</Title>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="First Name" placeholder="First Name" required />
-        <TextInput label="Last Name" placeholder="Last Name" required />
-        <TextInput label="Email" placeholder="example@example.com" required />
-        <PasswordInput
+        <FormInput
+          type="text"
+          label="First Name"
+          value=""
+          placeholder="Yahya"
+          validateFn={(val) => val.length > 1}
+          errorMsg="First name must be greater than 1 character."
+          required={true}
+          autocomplete="given-name"
+        ></FormInput>
+        <FormInput
+          type="text"
+          label="Last Name"
+          value=""
+          placeholder="Doe"
+          validateFn={(val) => val.length > 1}
+          errorMsg="Last name must be greater than 1 character."
+          required={true}
+          autocomplete="family-name"
+        ></FormInput>
+        <FormInput
+          type="text"
+          label="Email"
+          value=""
+          placeholder="example@example.com"
+          validateFn={(val) => val.includes('@')}
+          errorMsg="Invalid email address."
+          required={true}
+          autocomplete="username"
+        ></FormInput>
+        <FormInput
+          type="password"
           label="Password"
+          value=""
           placeholder="Your password"
-          required
-          mt="md"
-        />
-        <PasswordInput
+          validateFn={(val) => val.length > 8}
+          errorMsg="Password must be greater than 8 characters."
+          required={true}
+          autocomplete="new-password"
+        ></FormInput>
+        <FormInput
+          type="password"
           label="Confirm Password"
+          value=""
           placeholder="Your password"
-          required
-          mt="md"
-        />
+          validateFn={(val) => val.length > 8}
+          errorMsg="Password must be greater than 8 characters."
+          required={true}
+          autocomplete="new-password"
+        ></FormInput>
         <Button fullWidth mt="xl">
           Sign Up
         </Button>
