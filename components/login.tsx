@@ -1,6 +1,4 @@
 import {
-  TextInput,
-  PasswordInput,
   Checkbox,
   Anchor,
   Paper,
@@ -10,6 +8,7 @@ import {
   Group,
   Button,
 } from '@mantine/core';
+import FormInput from './form_input';
 
 export function Login() {
   return (
@@ -23,13 +22,30 @@ export function Login() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="example@example.com" required />
-        <PasswordInput
-          label="Password"
-          placeholder="Your password"
-          required
-          mt="md"
-        />
+        <form>
+          <FormInput
+            type="text"
+            label="Email"
+            value=""
+            placeholder="example@example.com"
+            error="Input must be an email."
+            validateFn={(val) => val.includes('@')}
+            errorMsg="Invalid email address."
+            required={true}
+            autocomplete="username"
+          ></FormInput>
+          <FormInput
+            type="password"
+            label="Password"
+            value=""
+            placeholder="Your password"
+            error="Password must be greater than 8 characters."
+            validateFn={(val) => val.length > 8}
+            errorMsg="Invalid password."
+            required={true}
+            autocomplete="current-password"
+          ></FormInput>
+        </form>
         <Group mt="lg">
           <Checkbox label="Remember me" />
           <Anchor component="button" size="sm">
