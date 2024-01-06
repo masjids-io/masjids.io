@@ -28,7 +28,6 @@ export function Login() {
             label="Email"
             value=""
             placeholder="example@example.com"
-            error="Input must be an email."
             validateFn={(val) => val.includes('@')}
             errorMsg="Invalid email address."
             required={true}
@@ -39,9 +38,8 @@ export function Login() {
             label="Password"
             value=""
             placeholder="Your password"
-            error="Password must be greater than 8 characters."
             validateFn={(val) => val.length > 8}
-            errorMsg="Invalid password."
+            errorMsg="Password must be greater than 8 characters."
             required={true}
             autocomplete="current-password"
           ></FormInput>
