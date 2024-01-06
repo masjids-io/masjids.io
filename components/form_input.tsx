@@ -21,9 +21,9 @@ const FormInput: FC<FormInputProps> = ({
   value = '',
   onChange,
   placeholder,
-  autocomplete='',
+  autocomplete = '',
   validateFn = (value: string) => true,
-  errorMsg=undefined,
+  errorMsg = undefined,
   required = false,
   disabled = false,
   ...otherProps
@@ -71,7 +71,10 @@ const FormInput: FC<FormInputProps> = ({
         {...otherProps}
       />
       {error && (
-        <span id="error-message" className="block text-sm font-sans text-red-500 mb-1">
+        <span
+          id="error-message"
+          className="block text-sm font-sans text-red-500 mb-1"
+        >
           {error}
         </span>
       )}
