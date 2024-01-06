@@ -1,9 +1,4 @@
-import {
-  Paper,
-  Title,
-  Container,
-  Button,
-} from '@mantine/core';
+import { Paper, Title, Container, Button } from '@mantine/core';
 import FormInput from './form_input';
 
 export function Signup() {
@@ -17,7 +12,7 @@ export function Signup() {
           label="First Name"
           value=""
           placeholder="Yahya"
-          validateFn={(val) => val.length > 1}
+          validateFn={(val) => val.length > 0}
           errorMsg="First name must be greater than 1 character."
           required={true}
           autocomplete="given-name"
@@ -27,7 +22,7 @@ export function Signup() {
           label="Last Name"
           value=""
           placeholder="Doe"
-          validateFn={(val) => val.length > 1}
+          validateFn={(val) => val.length > 0}
           errorMsg="Last name must be greater than 1 character."
           required={true}
           autocomplete="family-name"
@@ -62,7 +57,7 @@ export function Signup() {
           required={true}
           autocomplete="new-password"
         ></FormInput>
-        <Button fullWidth mt="xl">
+        <Button fullWidth mt="xl" className="bg-lime-500 hover:bg-lime-700">
           Sign Up
         </Button>
       </Paper>

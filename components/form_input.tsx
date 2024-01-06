@@ -34,7 +34,7 @@ const FormInput: FC<FormInputProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
 
-    if (!validateFn(inputValue)) {
+    if (!validateFn(event.target.value)) {
       setError(errorMsg);
     } else {
       setError(undefined);

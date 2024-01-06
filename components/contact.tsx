@@ -74,7 +74,7 @@ export function ContactForm() {
             required
           />
           <Group mt="md">
-            <Button type="submit" size="md">
+            <Button type="submit" size="md" className="bg-lime-500 hover:bg-lime-700">
               Send Message
             </Button>
           </Group>

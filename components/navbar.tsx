@@ -90,8 +90,7 @@ export function Navbar() {
               <Login></Login>
             </Modal>
             <Button
-              variant="gradient"
-              gradient={{ from: 'lime', to: 'lime', deg: 0 }}
+              className="bg-lime-500 hover:bg-lime-700"
               onClick={login_open}
             >
               Log in
@@ -104,8 +103,7 @@ export function Navbar() {
               <Signup></Signup>
             </Modal>
             <Button
-              variant="gradient"
-              gradient={{ from: 'teal', to: 'teal', deg: 0 }}
+              className="bg-green-500 hover:bg-green-700"
               onClick={signup_open}
             >
               Sign up
@@ -146,14 +144,12 @@ export function Navbar() {
 
           <Group position="center" grow px="md">
             <Button
-              variant="gradient"
-              gradient={{ from: 'lime', to: 'lime', deg: 0 }}
+              className="bg-lime-500 hover:bg-lime-700"
             >
               Log in
             </Button>
             <Button
-              variant="gradient"
-              gradient={{ from: 'teal', to: 'teal', deg: 0 }}
+              className="bg-green-500 hover:bg-green-700"
             >
               Sign up
             </Button>
