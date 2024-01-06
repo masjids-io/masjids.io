@@ -34,7 +34,7 @@ const FormInput: FC<FormInputProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
 
-    if (!validateFn(inputValue)) {
+    if (!validateFn(event.target.value)) {
       setError(errorMsg);
     } else {
       setError(undefined);
@@ -59,7 +59,7 @@ const FormInput: FC<FormInputProps> = ({
         disabled={disabled}
         required={required}
         autoComplete={autocomplete}
-        aria-invalid={!!error}
+        aria-invalid={error ? true : false}
         aria-describedby={error ? 'error-message' : null}
         className="mt-1 block w-full px-3 py-2 
         bg-white border border-lime-300 
