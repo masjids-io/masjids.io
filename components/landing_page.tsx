@@ -29,8 +29,7 @@ export function LandingPage() {
         <Center>
           <Button
             size="md"
-            variant="gradient"
-            gradient={{ from: 'lime', to: 'lime', deg: 0 }}
+            className="bg-lime-500 hover:bg-lime-700"
             radius="md"
             mt="lg"
             mx="auto"

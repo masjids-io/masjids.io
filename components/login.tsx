@@ -50,7 +50,7 @@ export function Login() {
             Forgot password?
           </Anchor>
         </Group>
-        <Button fullWidth mt="xl">
+        <Button fullWidth mt="xl" className="bg-lime-500 hover:bg-lime-700">
           Sign in
         </Button>
       </Paper>
