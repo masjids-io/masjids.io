@@ -30,11 +30,13 @@ const FormInput: FC<FormInputProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [error, setError] = useState<string | undefined>(undefined);
+  const [hasTouched, setHasTouched] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+    setHasTouched(true);
 
-    if (!validateFn(event.target.value)) {
+    if (hasTouched && !validateFn(event.target.value)) {
       setError(errorMsg);
     } else {
       setError(undefined);
@@ -61,13 +63,12 @@ const FormInput: FC<FormInputProps> = ({
         autoComplete={autocomplete}
         aria-invalid={!!error}
         aria-describedby={error ? 'error-message' : null}
-        className="mt-1 block w-full px-3 py-2 
+        className={`mt-1 block w-full px-3 py-2 
         bg-white border border-lime-300 
         rounded-md text-sm shadow-sm 
         placeholder-slate-400 
         focus:outline-none focus:border-lime-500 focus:ring-1 focus:ring-lime-500 
-        invalid:border-red-500 invalid:text-red-600
-        focus:invalid:border-red-500 focus:invalid:ring-red-500"
+        ${error ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : ''}`}
         {...otherProps}
       />
       {error && (
