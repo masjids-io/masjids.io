@@ -1,6 +1,5 @@
 import Head from 'next/head';
-import { Center, Container, rem } from '@mantine/core';
-import { ContactForm } from '../components/contact';
+import { rem } from '@mantine/core';
 import { Navbar } from '../components/navbar';
 import { LandingPage } from '../components/landing_page';
 
@@ -16,12 +15,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container className="box">
-        <LandingPage></LandingPage>
-        <Center>
-          <ContactForm></ContactForm>
-        </Center>
-      </Container>
+      <LandingPage></LandingPage>
     </>
   );
 }

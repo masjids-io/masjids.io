@@ -7,74 +7,35 @@ import {
   Text,
   Button,
   Image,
+  Card,
 } from '@mantine/core';
+import { ContactForm } from './contact';
 
 export function LandingPage() {
   return (
     <MantineProvider>
+      <section className="hero relative w-full h-screen bg-cover bg-center mt-0" style={{ backgroundImage: 'url(/images/masjid1.jpeg)' }}>
+        <div className="absolute inset-0 bg-black opacity-10"></div>
+        <div className="flex items-center justify-center h-full text-white z-10">
+          <div className="text-center">
+            <h1 className="text-5xl font-bold text-white">Welcome to masjids.io</h1>
+            <p className="mt-4 text-lg text-white">Your one-stop shop for masjid technology.</p>
+            <Button className="mt-4" color="lime" variant="filled">
+              Get Started
+            </Button>
+          </div>
+        </div>
+      </section>
       <Container size="lg" py="xl">
-        <Title order={1} weight="bold" align="center">
-          masjids.io
-        </Title>
-        <Text size="lg" align="center" color="gray">
-          masjids.io is a one-stop shop for your masjid's technological needs.
-        </Text>
-        <Image
-          src="https://t4.ftcdn.net/jpg/03/17/31/99/360_F_317319974_fzB2wFm7HEexuMfQBxzLW2uTfM9jByuh.jpg"
-          alt="Landing Page Image"
-          radius="md"
-          mx="auto"
-          mt="lg"
-        />
         <Center>
-          <Button
-            size="md"
-            className="bg-lime-500 hover:bg-lime-700"
-            radius="md"
-            mt="lg"
-            mx="auto"
-          >
-            Get Started Today!
-          </Button>
+          <ContactForm />
         </Center>
       </Container>
-      <Container size="lg" py="xl">
-        <Text size="lg" align="center" color="gray">
-          Give your masjid the online presence it deserves.
-        </Text>
-        <Image
-          src="https://t4.ftcdn.net/jpg/03/17/31/99/360_F_317319974_fzB2wFm7HEexuMfQBxzLW2uTfM9jByuh.jpg"
-          alt="Landing Page Image"
-          radius="md"
-          mx="auto"
-          mt="lg"
-        />
-      </Container>
-      <Container size="lg" py="xl">
-        <Text size="lg" align="center" color="gray">
-          Quickly create a website for your masjid with our interactive
-          drag-and-drop editor.
-        </Text>
-        <Image
-          src="https://t4.ftcdn.net/jpg/03/17/31/99/360_F_317319974_fzB2wFm7HEexuMfQBxzLW2uTfM9jByuh.jpg"
-          alt="Landing Page Image"
-          radius="md"
-          mx="auto"
-          mt="lg"
-        />
-      </Container>
-      <Container size="lg" py="xl">
-        <Text size="lg" align="center" color="gray">
-          Expand your masjid's services with our partner apps.
-        </Text>
-        <Image
-          src="https://t4.ftcdn.net/jpg/03/17/31/99/360_F_317319974_fzB2wFm7HEexuMfQBxzLW2uTfM9jByuh.jpg"
-          alt="Landing Page Image"
-          radius="md"
-          mx="auto"
-          mt="lg"
-        />
-      </Container>
+      <footer className="bg-gray-200 py-4">
+        <Container size="lg">
+          <Text align="center">&copy; 2025 masjids.io | <a href="#">Privacy Policy</a></Text>
+        </Container>
+      </footer>
     </MantineProvider>
   );
 }

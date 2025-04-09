@@ -19,7 +19,7 @@ const useStyles = createStyles((theme) => ({
   link: {
     display: 'flex',
     alignItems: 'center',
-    height: '100%',
+    height: '60px',
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
     textDecoration: 'none',
@@ -62,7 +62,7 @@ export function Navbar() {
   const { classes, theme } = useStyles();
 
   return (
-    <Box pb={120}>
+    <Box>
       <Header height={60} px="md">
         <Group position="apart" sx={{ height: '100%' }}>
           <Group
