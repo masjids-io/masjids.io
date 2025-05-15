@@ -64,10 +64,10 @@ const FormInput: FC<FormInputProps> = ({
         aria-invalid={!!error}
         aria-describedby={error ? 'error-message' : null}
         className={`mt-1 block w-full px-3 py-2 
-        bg-white border border-lime-300 
+        bg-white border border-[#135D66] 
         rounded-md text-sm shadow-sm 
         placeholder-slate-400 
-        focus:outline-none focus:border-lime-500 focus:ring-1 focus:ring-lime-500 
+        focus:outline-none focus:border-[#135D66] focus:ring-1 focus:ring-[#135D66] 
         ${error ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : ''}`}
         {...otherProps}
       />

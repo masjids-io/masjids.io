@@ -1,34 +1,22 @@
 import React from 'react';
-import { createStyles, Card, Center, Image, Text } from '@mantine/core';
-
-const useStyles = createStyles((theme) => ({
-  footer: {
-    display: 'flex',
-  },
-}));
 
 export function ApplicationCard({ title, description, image, url }) {
-  const { classes, theme } = useStyles();
-
   return (
-    <Card withBorder padding="lg" shadow="md">
-      <a href={url}>
-        <Center>
-          <Image src={image} alt={title} height={100} width={100} radius="md" />
-        </Center>
-        <Card.Section>
-          <Center>
-            <Text weight="bold" size="lg">
-              {title}
-            </Text>
-          </Center>
-          <Center>
-            <Text size="sm" className={classes.footer}>
-              {description}
-            </Text>
-          </Center>
-        </Card.Section>
-      </a>
-    </Card>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block transform transition-transform duration-500 ease-in-out hover:scale-105 shadow-lg rounded-lg border border-gray-200 p-6 bg-white"
+    >
+      <div className="flex flex-col items-center text-center space-y-4">
+        <img
+          src={image}
+          alt={title}
+          className="w-16 h-16 object-contain rounded-md"
+        />
+        <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
+        <p className="text-sm text-gray-600">{description}</p>
+      </div>
+    </a>
   );
 }

@@ -1,6 +1,4 @@
 import {
-  createStyles,
-  rem,
   Box,
   Burger,
   Button,
@@ -14,43 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { Login } from './login';
 import { Signup } from './signup';
-
-const useStyles = createStyles((theme) => ({
-  link: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '60px',
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
-    textDecoration: 'none',
-    color: theme.black,
-    fontWeight: 250,
-    fontSize: theme.fontSizes.md,
-
-    [theme.fn.smallerThan('sm')]: {
-      height: rem(42),
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-    },
-
-    ...theme.fn.hover({
-      backgroundColor: theme.colors.green[0],
-    }),
-  },
-
-  hiddenMobile: {
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
-  hiddenDesktop: {
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
-  },
-}));
+import Link from 'next/link';
 
 export function Navbar() {
   const [drawerOpen, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -59,38 +21,33 @@ export function Navbar() {
     useDisclosure(false);
   const [signup_opened, { toggle: signup_open, close: signup_close }] =
     useDisclosure(false);
-  const { classes, theme } = useStyles();
 
   return (
     <Box>
       <Header height={60} px="md">
         <Group position="apart" sx={{ height: '100%' }}>
-          <Group
-            sx={{ height: '100%' }}
-            spacing={0}
-            className={classes.hiddenMobile}
-          >
-            <a href="#" className={classes.link}>
-              Home
-            </a>
-            <a href="/apps" className={classes.link}>
-              Apps
-            </a>
-            <a href="#" className={classes.link}>
-              Documentation
-            </a>
+          <Group sx={{ height: '100%' }} spacing={0} className="hidden-mobile">
+            <Link href="/" legacyBehavior>
+              <a className="navbar-link">Home</a>
+            </Link>
+            <Link href="/apps" legacyBehavior>
+              <a className="navbar-link">Apps</a>
+            </Link>
+            <Link href="/documentation" legacyBehavior>
+              <a className="navbar-link">Documentation</a>
+            </Link>
           </Group>
 
-          <Group className={classes.hiddenMobile}>
+          <Group className="hidden-mobile">
             <Modal
               opened={login_opened}
               onClose={login_close}
               withCloseButton={false}
             >
-              <Login></Login>
+              <Login />
             </Modal>
             <Button
-              className="bg-lime-500 hover:bg-lime-700"
+              className="bg-[#135D66] hover:bg-[#349aa7]"
               onClick={login_open}
             >
               Log in
@@ -100,10 +57,10 @@ export function Navbar() {
               onClose={signup_close}
               withCloseButton={false}
             >
-              <Signup></Signup>
+              <Signup />
             </Modal>
             <Button
-              className="bg-green-500 hover:bg-green-700"
+              className="bg-[#77B0AA] hover:bg-[#85c9c1]"
               onClick={signup_open}
             >
               Sign up
@@ -113,7 +70,7 @@ export function Navbar() {
           <Burger
             opened={drawerOpen}
             onClick={toggleDrawer}
-            className={classes.hiddenDesktop}
+            className="hidden-desktop"
           />
         </Group>
       </Header>
@@ -123,33 +80,39 @@ export function Navbar() {
         onClose={closeDrawer}
         size="100%"
         padding="md"
-        title="masjids.io"
-        className={classes.hiddenDesktop}
+        title={<h2 className="text-2xl font-bold">masjids.io</h2>}
+        className="hidden-desktop"
         zIndex={1000000}
       >
-        <ScrollArea h={`calc(100vh - ${rem(60)})`} mx="-md">
-          <Divider my="sm" color={'gray.1'} />
+        <ScrollArea h="calc(100vh - 60px)" mx="-md">
+          <Divider my="sm" color="gray.1" />
 
-          <a href="#" className={classes.link}>
-            Home
-          </a>
-          <a href="#" className={classes.link}>
-            Apps
-          </a>
-          <a href="#" className={classes.link}>
-            Documentation
-          </a>
+          <Link href="/" legacyBehavior>
+            <a className="navbar-link">Home</a>
+          </Link>
+          <Link href="/apps" legacyBehavior>
+            <a className="navbar-link">Apps</a>
+          </Link>
+          <Link href="/documentation" legacyBehavior>
+            <a className="navbar-link">Documentation</a>
+          </Link>
 
-          <Divider my="sm" color={'gray.1'} />
+          <Divider my="sm" color="gray.1" />
 
           <Group position="center" grow px="md">
             <Button
-              className="bg-lime-500 hover:bg-lime-700"
+              className="bg-[#135D66] hover:bg-[#349aa7]"
+              onClick={() => {
+                closeDrawer(), login_open();
+              }}
             >
               Log in
             </Button>
             <Button
-              className="bg-green-500 hover:bg-green-700"
+              className="bg-[#77B0AA] hover:bg-[#85c9c1]"
+              onClick={() => {
+                closeDrawer(), signup_open();
+              }}
             >
               Sign up
             </Button>

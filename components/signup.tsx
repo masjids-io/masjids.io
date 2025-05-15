@@ -57,7 +57,7 @@ export function Signup() {
           required={true}
           autocomplete="new-password"
         ></FormInput>
-        <Button fullWidth mt="xl" className="bg-lime-500 hover:bg-lime-700">
+        <Button fullWidth mt="xl" className="bg-[#135D66] hover:bg-[#349aa7]">
           Sign Up
         </Button>
       </Paper>
