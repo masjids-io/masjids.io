@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Please enter an email and password");
         }
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        const res = await fetch(`http://198.199.81.24/api/v1/auth/login`, {
           method: 'POST',
           body: JSON.stringify({
             email: credentials.email,
@@ -77,5 +77,5 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
     error: '/login',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: 'your-super-secret-key',
 };

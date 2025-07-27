@@ -64,7 +64,7 @@ export default function Login() {
                                 <div className="pl-120 lg:pl-48 md:pl-0 pt-120 md:pt-100">
                                     <div className="pt-120 md:pt-0">
                                         <div className="md:container sm:w-screen">
-                                            <h1 className="text-4xl md:text-3xl text-white">Selamat Datang di<br /> masjids.io</h1>
+                                            <h1 className="text-4xl md:text-3xl text-white">Welcome to<br /> masjids.io</h1>
                                         </div>
                                     </div>
                                 </div>
@@ -74,8 +74,7 @@ export default function Login() {
                         <div className="col-lg-5">
                             <div className="md:container py-48">
                                 <h1 className="text-4xl md:text-3xl">Login</h1>
-                                <p className="mt-16">Belum punya akun? <Link className="decoration-none text-accent fw-600" href="register">Buat di sini</Link></p>
-                                
+                                <p className="mt-16">Don't have an account? <Link className="decoration-none text-accent fw-600" href="register">Register here</Link></p>
                                 {/* 3. Connect Formik to the form element */}
                                 <form className="contact-form row y-gap-32 pt-48" onSubmit={formik.handleSubmit}>
 
@@ -102,7 +101,7 @@ export default function Login() {
                                         />
                                         {/* Display validation errors */}
                                         {formik.touched.email && formik.errors.email ? (
-                                            <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+                                            <div className="text-danger text-sm mt-1">{formik.errors.email}</div>
                                         ) : null}
                                     </div>
 
@@ -133,7 +132,7 @@ export default function Login() {
                                             </button>
                                         </div>
                                         {formik.touched.password && formik.errors.password ? (
-                                            <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
+                                            <div className="text-danger text-sm mt-1">{formik.errors.password}</div>
                                         ) : null}
                                     </div>
 
@@ -145,18 +144,18 @@ export default function Login() {
                                                         <input type="checkbox" />
                                                         <div className="checkbox__mark"><Icon.Check className="checkbox__icon" /></div>
                                                     </div>
-                                                    <label htmlFor="items">Ingat saya</label>
+                                                    <label htmlFor="items">Remember me</label>
                                                 </div>
                                             </div>
                                             <div className="col-auto">
-                                                <a className="decoration-none text-accent" href="#">Lupa kata sandi Anda?</a>
+                                                <a className="decoration-none text-accent" href="#">Forgot your password?</a>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-12">
                                         {/* 4. Use Formik's 'isSubmitting' for loading state */}
-                                        <button 
-                                            type="submit" 
+                                        <button
+                                            type="submit"
                                             className="button -md -accent -uppercase text-white"
                                             disabled={formik.isSubmitting}
                                         >

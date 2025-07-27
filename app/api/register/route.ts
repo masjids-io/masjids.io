@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     // Optional: Add server-side validation here with a library like Zod for extra security.
 
     // This is a SERVER-SIDE request, so CORS policies do not apply.
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+    const apiRes = await fetch(`http://198.199.81.24/api/v1/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
