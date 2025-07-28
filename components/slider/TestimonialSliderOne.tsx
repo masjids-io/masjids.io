@@ -73,24 +73,6 @@ export default function TestimonialSliderOne() {
                 <SwiperSlide className="swiper-slide">
                     <div className="testimonials -small">
                         <h4 className="testimonials__title text-xl fw-600 text-dark-1">
-                            Donations Have Never Been Easier
-                        </h4>
-                        <p className="testimonials__text mt-20">
-                            "Implementing the online donation feature was seamless. Our fundraising has become more consistent and transparent. It provides a convenient and secure way for our members to contribute."
-                        </p>
-                        <div className="testimonials__author mt-24">
-                            <div className="testimonials__name text-lg fw-600 text-dark-1">
-                                Omar Hassan
-                            </div>
-                            <div className="testimonials__position">
-                                Treasurer, Masjid As-Salam
-                            </div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide className="swiper-slide">
-                    <div className="testimonials -small">
-                        <h4 className="testimonials__title text-xl fw-600 text-dark-1">
                             An Essential Tool for Every Masjid
                         </h4>
                         <p className="testimonials__text mt-20">

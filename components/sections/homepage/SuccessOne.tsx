@@ -57,21 +57,6 @@ export default function SuccessOne() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-12 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                                    <div
-                                        className="d-flex sm:direction-column"
-                                    >
-                                        <div className="d-flex justify-center items-center flex-grow size-icon-80 rounded-30 bg-accent-light mr-20 sm:mr-0">
-                                            <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/success/package-delivery.svg" alt="icon" />
-                                        </div>
-                                        <div className="sm:mt-20">
-                                            <h4 className="text-xl fw-600 lh-1">Streamlined Donations</h4>
-                                            <p className="mt-12">
-                                                Provide a secure and convenient platform for members to make one-time or recurring donations. Easily manage fundraising campaigns.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div className="col-12 wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
                                     <div
                                         className="d-flex sm:direction-column"

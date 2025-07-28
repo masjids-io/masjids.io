@@ -6,8 +6,12 @@ import Image from 'next/image'
 export default function Comingsoon() {
     return (
         <>
-            <Layout>
-                <div>
+            <Layout
+                headerLayout={1}
+                logo="logo" // logo, logo-flat, logo-5
+                verticalLine={true} // if vertical line true, show vertical line show
+            >
+                <>
                     <section className="page-header -base -">
                         <div className="page-header__bg">
                             <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} className="initial-img" src="/img/page-header/bg-light.png" alt="Page header" />
@@ -27,7 +31,7 @@ export default function Comingsoon() {
                             </div>
                         </div>
                     </section>
-                </div>
+                </>
             </Layout>
         </>
     )

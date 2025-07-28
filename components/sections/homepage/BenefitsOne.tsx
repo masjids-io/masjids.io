@@ -63,27 +63,7 @@ export default function BenefitsOne() {
                                         <p className="text-lg text-dark-1 fw-600">Announcements</p>
                                     </div>
                                 </div>
-                                <div className="col-6">
-                                    <div className="d-flex items-center">
-                                        <div className="icon-circle-check mr-12">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width={24}
-                                                height={24}
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="feather feather-check icon text-accent"
-                                            >
-                                                <polyline points="20 6 9 17 4 12" />
-                                            </svg>
-                                        </div>
-                                        <p className="text-lg text-dark-1 fw-600">Online Donations</p>
-                                    </div>
-                                </div>
+
                                 <div className="col-6">
                                     <div className="d-flex items-center">
                                         <div className="icon-circle-check mr-12">

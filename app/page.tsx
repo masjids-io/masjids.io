@@ -30,7 +30,6 @@ export default function Home1() {
                 <FeatureOne />
                 <TestimonialOne />
                 <CounterOne />
-                <PricingOne />
                 <FaqOne />
             </Layout>
         </>

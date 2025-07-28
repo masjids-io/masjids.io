@@ -14,7 +14,7 @@ const faqData: FaqItem[] = [
     {
         id: 1,
         question: "What is Masjids.io?",
-        answer: "Masjids.io is a modern digital platform designed to help mosques connect with their communities. It offers a suite of tools for managing prayer times, events, announcements, and online donations, all in one place."
+        answer: "Masjids.io is a modern digital platform designed to help mosques connect with their communities. It offers a suite of tools for managing prayer times, events and announcements  online  all in one place."
     },
     {
         id: 2,

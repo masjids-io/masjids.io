@@ -21,7 +21,7 @@ export default function HeroOne({ bgPath, textWhite }: Props) {
                         <div className="col-xl-7 col-lg-6">
                             <div className="masthead__content relative z-2">
                                 <div className="masthead__subtitle wow animate__animated animate__fadeInUp">
-                                    <span>Your one-stop shop for masjid technology. Explore prayer times, events, donations, and more — all in one place.</span>
+                                    <span>Your one-stop shop for masjid technology. Explore prayer times, events,  and more — all in one place.</span>
                                 </div>
                                 <h1 className={`masthead__title wow animate__animated animate__fadeInUp ${textWhite}`}>
                                     Find a <span className={`${textWhite ? '' : 'text-accent'}`}>Masjid</span>
