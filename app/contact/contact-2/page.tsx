@@ -15,7 +15,7 @@ export default function Contact1() {
                 <div>
                     <section className="page-header -base -">
                         <div className="page-header__bg">
-                            <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} className="initial-img" src="/img/page-header/bg-light.png" alt="Page header" />
+                            <Image width="0" height="0" sizes="200vw" style={{ width: "auto", height: "auto" }} className="initial-img" src="/img/page-header/bg-light.png" alt="Page header" />
                         </div>
                         <div className="page-header__content">
                             <div className="row justify-center text-center">

@@ -13,7 +13,7 @@ export default function HeroOne({ bgPath, textWhite }: Props) {
         <>
             <section className="masthead -type-1 overflow-hidden">
                 <div className="masthead__bg wow animate__animated animate__fadeIn overflow-hidden relative">
-                    <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src={`/img/${bgPath}/bg.png`} alt="bg" />
+                    <Image width="0" height="0" sizes="200vw" style={{ width: "auto", height: "auto" }} src={`/img/${bgPath}/bg.png`} alt="bg" />
                     <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} className="wow animate__animated animate__fadeInUp" src="/img/home-1/masthead/rect.svg" alt="bg" />
                 </div>
                 <div className="container">
@@ -74,7 +74,7 @@ export default function HeroOne({ bgPath, textWhite }: Props) {
                                     shadow={false}
                                     data-atropos-offset={-5}
                                 >
-                                    <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/masthead/phones.png" alt="phone" />
+                                    <Image width="0" height="0" sizes="200vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/masthead/phones.png" alt="phone" />
                                 </Atropos>
                             </div>
                         </div>
