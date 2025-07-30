@@ -1,0 +1,28 @@
+.content-none {
+  &:after {
+    display: none !important;
+  }
+
+  &:before {
+    display: none !important;
+  }
+}
+
+.icons-center {
+  display: inline-flex;
+  align-items: center;
+}
+
+.flex-centered{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.noUi-connect{
+  background-color: #007aff !important;
+}

@@ -1,0 +1,83 @@
+//
+// light-mode.scss
+//
+
+
+// ================================ //
+// ======== Custom Variable ======= //
+// ================================ //
+
+:root {
+    --#{$prefix}logo-lg-height:           30px;
+    --#{$prefix}logo-sm-height:           30px;
+
+    --#{$prefix}leftbar-width:            275px;
+    --#{$prefix}leftbar-width-md:         160px;
+    --#{$prefix}leftbar-width-sm:         80px;
+    --#{$prefix}leftbar-condensed-height: 1500px;
+
+    --#{$prefix}topbar-height:             75px;
+
+    --#{$prefix}menu-item-icon-size:       1.1rem;
+    --#{$prefix}menu-item-font-size:       15px;
+    --#{$prefix}menu-item-padding-x:       12px;
+    --#{$prefix}menu-item-padding-y:       10px;
+
+    // Footer Height
+    --#{$prefix}footer-height:             60px;
+}
+
+// ================================ //
+// ========== Main Menu =========== //
+// ================================ //
+
+// Background Light left-sidebar
+html[data-menu-color="light"] {
+    --#{$prefix}menu-bg:                             #ffffff;
+    --#{$prefix}menu-item-color:                       #{$gray-700};
+    --#{$prefix}menu-item-hover-color:                 #{$primary};
+    --#{$prefix}menu-item-active-color:                #{$primary};
+    --#{$prefix}menu-item-active-bg:                   #{rgba($primary, 0.07)};
+    --#{$prefix}menu-condensed-link-bg:                #fafaf9;
+}
+
+// Dark Mode Left Sidebar
+html[data-menu-color="dark"],
+html[data-bs-theme="dark"][data-menu-color="light"] {
+    --#{$prefix}menu-bg:                               #000000;
+    --#{$prefix}menu-item-color:                       #ffffff;
+    --#{$prefix}menu-item-hover-color:                 #fafaf9;
+    --#{$prefix}menu-item-active-color:                  #{$primary};
+    --#{$prefix}menu-item-active-bg:                     #{rgba($white, 0.07)};
+    --#{$prefix}menu-condensed-link-bg:                #09090b;
+}
+
+// ================================ //
+// ========== Topbar ============== //
+// ================================ //
+
+// Light Topbar
+html[data-topbar-color="light"] {
+    --#{$prefix}topbar-bg:                         var(--#{$prefix}body-bg);
+    --#{$prefix}topbar-item-color:                 #{$gray-700};
+    --#{$prefix}topbar-item-hover-color:           #{$primary};
+    --#{$prefix}topbar-search-bg:                  #{tint-color($gray-200,10%)};
+}
+
+
+// Dark Topbar
+html[data-topbar-color="dark"] {
+    --#{$prefix}topbar-bg:                  #171717;
+    --#{$prefix}topbar-item-color:          #d4d4d4;
+    --#{$prefix}topbar-item-hover-color:    #fafaf9;
+    --#{$prefix}topbar-search-bg:           #464f5b;
+}
+
+// Dark Mode Topbar
+html[data-bs-theme="dark"][data-topbar-color="light"],
+html[data-bs-theme="dark"][data-topbar-color="dark"] {
+    --#{$prefix}topbar-bg:                  #171717;
+    --#{$prefix}topbar-item-color:          #d4d4d4;
+    --#{$prefix}topbar-item-hover-color:    #fafaf9;
+    --#{$prefix}topbar-search-bg:           #363f4a;
+}

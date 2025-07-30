@@ -1,0 +1,84 @@
+//
+// profile.scss
+//
+
+
+.profile-bg-picture {
+    position: relative;
+    min-height: 500px;
+    margin: -24px -24px 0px -24px;
+    background-position: center;
+    background-size: cover;
+}
+
+.profile-user {
+    background-color: $card-bg;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--#{$prefix}border-color);
+    margin-top: -65px;
+    position: relative;
+}
+
+.profile-user-img img {
+    // position: absolute;
+    // top: -56px;
+    border: 2px solid var(--#{$prefix}border-color);
+    background-color: var(--#{$prefix}light);
+}
+
+.profile-content {
+    .nav-underline {
+        .nav-item {
+            .nav-link {
+                color: var(--#{$prefix}secondary-color);
+                font-weight: 600;
+                border-bottom: 0.15rem solid var(--#{$prefix}light);
+                font-size: 16px;
+
+                &:hover {
+                    color: $primary !important;
+                    border-bottom-color: $primary !important;
+                }
+
+                &.active {
+                    color: $white !important;
+                    border-bottom-color: $primary !important;
+                }
+            }
+        }
+    }
+}
+
+/* Timeline-2 */
+.timeline-2 {
+    position: relative;
+    border-left: 2px solid $primary;
+
+    .time-item {
+        position: relative;
+        padding-bottom: 1px;
+        border-color: $light;
+
+        :before,
+        :after {
+            display: table;
+            content: " ";
+        }
+
+        :after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            margin-left: -8px;
+            background-color: $card-bg;
+            border-color: $primary;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 50%;
+        }
+    }
+}
