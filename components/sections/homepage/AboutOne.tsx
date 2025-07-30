@@ -35,21 +35,6 @@ export default function AboutOne() {
                                 className="d-flex rounded-8 py-40 pr-60 pl-50 md:px-34 md:py-34 sm:px-30 sm:py-30 md:direction-column bg-white shadow-card hover-up"
                             >
                                 <div className="mr-48 md:mr-0">
-                                    <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/company/cloud-storage.svg" alt="icon" />
-                                </div>
-                                <div className="md:mt-20">
-                                    <h4 className="text-xl fw-600 lh-1">Secure Donations</h4>
-                                    <p className="mt-20 md:mt-12">
-                                        Easily accept one-time and recurring donations. Manage fundraising campaigns and provide a seamless, secure giving experience for your community.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 wow animate__animated animate__fadeInUp">
-                            <div
-                                className="d-flex rounded-8 py-40 pr-60 pl-50 md:px-34 md:py-34 sm:px-30 sm:py-30 md:direction-column bg-white shadow-card hover-up"
-                            >
-                                <div className="mr-48 md:mr-0">
                                     <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/company/touch.svg" alt="icon" />
                                 </div>
                                 <div className="md:mt-20">

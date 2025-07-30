@@ -32,24 +32,6 @@ export default function AccordionOne() {
                                     </div>
                                 </div>
                             </div>
-                            <div className=" wow animate__animated animate__fadeInUp" data-wow-delay='0.2s'>
-                                <div
-                                    className={`tabs__button rounded-8 js-tabs-button ${active == 2 ? "is-active" : ""}`}
-                                    onClick={() => handleOnClick(2)}
-                                >
-                                    <div className="d-flex rounded-8 py-36 pr-20 pl-50 md:px-30 | hover-group h:bg-white">
-                                        <div className="d-flex justify-center items-center flex-grow size-icon-50 mr-40 md:mr-32">
-                                            <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/features/pencil.svg" alt="icon" />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-xl fw-600 lh-1">Donation Management</h4>
-                                            <p className="mt-12">
-                                                Securely accept online donations and manage all fundraising campaigns with ease.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div className=" wow animate__animated animate__fadeInUp" data-wow-delay='0.4s'>
                                 <div
                                     className={`tabs__button rounded-8 js-tabs-button ${active == 3 ? "is-active" : ""}`}

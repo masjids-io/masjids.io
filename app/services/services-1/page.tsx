@@ -4,13 +4,19 @@ import * as Icon from 'react-feather'
 import Image from 'next/image'
 
 export default function Services1() {
+
     return (
         <>
-            <Layout>
+            <Layout
+                headerLayout={1}
+                footerLayout={1}
+                logo="logo" // logo, logo-flat, logo-5
+                verticalLine={true} // if vertical line true, show vertical line show
+            >
                 <div>
                     <section className="page-header -base -">
                         <div className="page-header__bg">
-                            <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} className="initial-img" src="/img/page-header/bg-light.png" alt="Page header" />
+                            <Image width="0" height="0" sizes="200vw" style={{ width: "auto", height: "auto" }} className="initial-img" src="/img/page-header/bg-light.png" alt="Page header" />
                         </div>
                         <div className="page-header__content">
                             <div className="row justify-center text-center">
@@ -21,7 +27,7 @@ export default function Services1() {
                                 </div>
                                 <div className="col-xl-6 col-lg-9 col-md-10">
                                     <div className="px-20">
-                                        <p className="page-header__text">From websites and mobile apps to donations and communications, we have you covered. Manage your community with our easy-to-use tools.</p>
+                                        <p className="page-header__text">From websites and mobile apps and communications, we have you covered. Manage your community with our easy-to-use tools.</p>
                                     </div>
                                 </div>
                             </div>

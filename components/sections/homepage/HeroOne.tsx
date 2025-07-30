@@ -13,7 +13,7 @@ export default function HeroOne({ bgPath, textWhite }: Props) {
         <>
             <section className="masthead -type-1 overflow-hidden">
                 <div className="masthead__bg wow animate__animated animate__fadeIn overflow-hidden relative">
-                    <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src={`/img/${bgPath}/bg.png`} alt="bg" />
+                    <Image width="0" height="0" sizes="200vw" style={{ width: "auto", height: "auto" }} src={`/img/${bgPath}/bg.png`} alt="bg" />
                     <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} className="wow animate__animated animate__fadeInUp" src="/img/home-1/masthead/rect.svg" alt="bg" />
                 </div>
                 <div className="container">
@@ -21,7 +21,7 @@ export default function HeroOne({ bgPath, textWhite }: Props) {
                         <div className="col-xl-7 col-lg-6">
                             <div className="masthead__content relative z-2">
                                 <div className="masthead__subtitle wow animate__animated animate__fadeInUp">
-                                    <span>Your one-stop shop for masjid technology. Explore prayer times, events, donations, and more — all in one place.</span>
+                                    <span>Your one-stop shop for masjid technology. Explore prayer times, events,  and more — all in one place.</span>
                                 </div>
                                 <h1 className={`masthead__title wow animate__animated animate__fadeInUp ${textWhite}`}>
                                     Find a <span className={`${textWhite ? '' : 'text-accent'}`}>Masjid</span>
@@ -74,7 +74,7 @@ export default function HeroOne({ bgPath, textWhite }: Props) {
                                     shadow={false}
                                     data-atropos-offset={-5}
                                 >
-                                    <Image width="0" height="0" sizes="100vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/masthead/phones.png" alt="phone" />
+                                    <Image width="0" height="0" sizes="200vw" style={{ width: "auto", height: "auto" }} src="/img/home-1/masthead/phones.png" alt="phone" />
                                 </Atropos>
                             </div>
                         </div>
