@@ -1,38 +1,43 @@
-'use client'
-import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
-import { Suspense, useEffect } from 'react' // Import useEffect
+'use client';
 
-import type { ChildrenType } from '@/types/component-props'
-import FallbackLoading from '../FallbackLoading'
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Suspense, useEffect } from 'react';
+
+// Prop types
+interface ChildrenType {
+  children: React.ReactNode;
+}
+// A simple loading component
+const FallbackLoading = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100%', background: '#fff' }}>
+    <p>Loading...</p>
+  </div>
+);
 
 const AuthProtectionWrapper = ({ children }: ChildrenType) => {
-  const { status } = useSession()
-  const { push } = useRouter()
-  // The pathname is not used in the logic, so it can be removed if not needed elsewhere.
-  // const pathname = usePathname()
+  const { status } = useSession();
+  const { push } = useRouter();
 
   useEffect(() => {
-    // This effect runs when the 'status' changes.
-    // If the user is unauthenticated, redirect them to the login page.
+    // If the session status is 'unauthenticated', redirect to the login page
     if (status === 'unauthenticated') {
-      push(`/login`)
+      push(`/login`);
     }
-  }, [status, push]) // Dependency array ensures this runs only when status or push changes.
+  }, [status, push]);
 
-  // While the session is being checked, show a loading indicator.
+  // While the session is being checked, show a loading indicator
   if (status === 'loading') {
-    return <FallbackLoading />
+    return <FallbackLoading />;
   }
 
-  // If the user is authenticated, render the children.
-  // The unauthenticated case is handled by the redirect in useEffect.
+  // If authenticated, render the protected content
   if (status === 'authenticated') {
-    return <Suspense>{children}</Suspense>
+    return <Suspense fallback={<FallbackLoading />}>{children}</Suspense>;
   }
 
-  // Render a fallback for the unauthenticated case while redirecting.
-  return <FallbackLoading />
-}
+  // Fallback while redirecting (if status is 'unauthenticated')
+  return <FallbackLoading />;
+};
 
-export default AuthProtectionWrapper
+export default AuthProtectionWrapper;
