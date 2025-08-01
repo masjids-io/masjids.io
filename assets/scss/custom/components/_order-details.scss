@@ -1,0 +1,15 @@
+// --------order-details.scss
+
+.card {
+    .orded-outline{
+        &::before {
+            content: '';
+            position: absolute;
+            top: 58%;
+            left: 50%;
+            width: 1px;
+            height: 60px;
+            background-color: $primary
+        }
+    }
+}

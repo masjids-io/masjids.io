@@ -6,15 +6,17 @@ This repository hosts the frontend code for masjids.io
 ### Done
 - Landing page
 - Project setup
+- Login cookie session
+- Login page
+- Home page (after login) showing info
 
 ### TODO
 - Unit tests
 - integration tests
 - Connect to API
-- Login cookie session
-- Login page
+
 - Landing Page
 - Signup page
 - Account settings page
-- Home page (after login) showing info
+
 - Drag and drop website builder

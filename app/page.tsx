@@ -12,6 +12,16 @@ import PricingOne from '@/components/sections/homepage/PricingOne'
 import SuccessOne from '@/components/sections/homepage/SuccessOne'
 import TestimonialOne from '@/components/sections/homepage/TestimonialOne'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import '@/public/css/vendors.css'
+import '@/public/css/animate.min.css'
+import '@/public/css/main.css'
+
+import "swiper/css"
+import "swiper/css/navigation"
+
+
 
 export default function Home1() {
     
