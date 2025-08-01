@@ -76,10 +76,10 @@ const columns: ColumnDef<Masjid>[] = [
     cell: ({ row }) => (
       <ButtonGroup size="sm">
         <Button variant="outline-primary">
-          <IconifyIcon icon="ri-edit-box-line" /> 
+          <IconifyIcon icon="ri-edit-box-line" />
         </Button>
         <Button variant="outline-danger">
-          <IconifyIcon icon="ri-delete-bin-line" /> 
+          <IconifyIcon icon="ri-delete-bin-line" />
         </Button>
       </ButtonGroup>
     ),
@@ -94,10 +94,11 @@ export default function TableMasjids() {
       <Col>
         <Card>
           <Card.Header>
-            <h4 className="header-title">Manajemen Data Masjid</h4>
+            <h4 className="header-title">Masjids Data Management</h4>
             <p className="text-muted mb-0">
-              Tabel data masjid dengan detail dan kustomisasi.
+              A masjids data table with detailed information and customization options.
             </p>
+
           </Card.Header>
           <CardBody>
             <ReactTable<Masjid>
