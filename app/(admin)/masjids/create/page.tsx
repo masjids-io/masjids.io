@@ -12,6 +12,7 @@ import {
   Alert,
   Spinner,
 } from 'react-bootstrap';
+import { useRouter } from 'next/navigation'; // Import the useRouter hook
 
 // Validation Schema using Yup to match the nested JSON structure
 const masjidValidationSchema = Yup.object().shape({
@@ -50,10 +51,8 @@ const masjidValidationSchema = Yup.object().shape({
 
 // Main Form Component
 export default function CreateMasjidForm() {
-  const [formStatus, setFormStatus] = useState<{
-    type: 'success' | 'error';
-    message: string;
-  } | null>(null);
+  const router = useRouter(); // Initialize the router
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Default values for the form fields
   const initialValues = {
@@ -90,11 +89,11 @@ export default function CreateMasjidForm() {
     },
   };
 
-  const handleSubmit = async (values: typeof initialValues, { setSubmitting, resetForm }: any) => {
-    setFormStatus(null);
+  const handleSubmit = async (values: typeof initialValues, { setSubmitting }: any) => {
+    setErrorMessage(null);
     try {
       // The form will post to our Next.js API route, which then securely forwards the request.
-      const response = await fetch('/api/masjids', {
+      const response = await fetch('/api/masjids/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -107,17 +106,17 @@ export default function CreateMasjidForm() {
         throw new Error(result.error || `Request failed with status ${response.status}`);
       }
 
-      setFormStatus({ type: 'success', message: 'Masjid created successfully!' });
-      resetForm();
+      // On success, redirect to the masjids page
+      router.push('/masjids');
 
     } catch (error: any) {
-      setFormStatus({ type: 'error', message: error.message || 'Failed to submit the form.' });
+      setErrorMessage(error.message || 'Failed to submit the form.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Reusable helper component for form fields. It now accepts children.
+  // Reusable helper component for form fields.
   const FormField = ({ name, label, type = 'text', as = 'input', children }: { name: string, label: string, type?: string, as?: string, children?: React.ReactNode }) => (
     <Form.Group as={Col} md="6" controlId={name} className="mb-3">
       <Form.Label>{label}</Form.Label>
@@ -126,7 +125,6 @@ export default function CreateMasjidForm() {
         type={type}
         as={as === 'select' ? Form.Select : Form.Control}
       >
-        {/* This will now correctly render children ONLY for select elements */}
         {children}
       </Field>
       <ErrorMessage name={name} component={Form.Text} className="text-danger" />
@@ -149,7 +147,7 @@ export default function CreateMasjidForm() {
                 <FormField name="location" label="Location" />
               </Row>
               <Form.Group className="mb-4">
-                 <Field as={Form.Check} type="checkbox" name="is_verified" id="is_verified" label="Is Verified" />
+                  <Field as={Form.Check} type="checkbox" name="is_verified" id="is_verified" label="Is Verified" />
               </Form.Group>
               
               <hr />
@@ -177,41 +175,38 @@ export default function CreateMasjidForm() {
 
               <hr />
               <h5 className="mb-3">Prayer Configuration</h5>
-               <Row>
-                {/* UPDATED: Calculation Method is now a select dropdown */}
-                <FormField name="prayerConfig.method" label="Calculation Method" as="select">
-                    <option value="MUSLIM_WORLD_LEAGUE">Muslim World League</option>
-                    <option value="EGYPTIAN">Egyptian</option>
-                    <option value="KARACHI">Karachi</option>
-                    <option value="UMM_AL_QURA">Umm Al-Qura</option>
-                    <option value="DUBAI">Dubai</option>
-                    <option value="MOON_SIGHTING_COMMITTEE">Moon Sighting Committee</option>
-                    <option value="NORTH_AMERICA">North America</option>
-                    <option value="KUWAIT">Kuwait</option>
-                    <option value="QATAR">Qatar</option>
-                    <option value="SINGAPORE">Singapore</option>
-                    <option value="UOIF">UOIF</option>
-                    <option value="OTHER">Other</option>
-                </FormField>
-                {/* UPDATED: Asr Method is now a select dropdown */}
-                <FormField name="prayerConfig.asrMethod" label="Asr Method" as="select">
-                    <option value="SHAFI_HANBALI_MALIKI">Shafi/Hanbali/Maliki</option>
-                    <option value="HANAFI">Hanafi</option>
-                </FormField>
+                <Row>
+                  <FormField name="prayerConfig.method" label="Calculation Method" as="select">
+                      <option value="MUSLIM_WORLD_LEAGUE">Muslim World League</option>
+                      <option value="EGYPTIAN">Egyptian</option>
+                      <option value="KARACHI">Karachi</option>
+                      <option value="UMM_AL_QURA">Umm Al-Qura</option>
+                      <option value="DUBAI">Dubai</option>
+                      <option value="MOON_SIGHTING_COMMITTEE">Moon Sighting Committee</option>
+                      <option value="NORTH_AMERICA">North America</option>
+                      <option value="KUWAIT">Kuwait</option>
+                      <option value="QATAR">Qatar</option>
+                      <option value="SINGAPORE">Singapore</option>
+                      <option value="UOIF">UOIF</option>
+                      <option value="OTHER">Other</option>
+                  </FormField>
+                  <FormField name="prayerConfig.asrMethod" label="Asr Method" as="select">
+                      <option value="SHAFI_HANBALI_MALIKI">Shafi/Hanbali/Maliki</option>
+                      <option value="HANAFI">Hanafi</option>
+                  </FormField>
               </Row>
-               <Row>
-                <FormField name="prayerConfig.fajrAngle" label="Fajr Angle" type="number" />
-                <FormField name="prayerConfig.ishaAngle" label="Isha Angle" type="number" />
+                <Row>
+                  <FormField name="prayerConfig.fajrAngle" label="Fajr Angle" type="number" />
+                  <FormField name="prayerConfig.ishaAngle" label="Isha Angle" type="number" />
               </Row>
-               <Row>
-                <FormField name="prayerConfig.ishaInterval" label="Isha Interval" type="number" />
-                {/* UPDATED: High Latitude Rule is now a select dropdown */}
-                <FormField name="prayerConfig.highLatitudeRule" label="High Latitude Rule" as="select">
-                    <option value="MIDDLE_OF_THE_NIGHT">Middle of the Night</option>
-                    <option value="SEVENTH_OF_THE_NIGHT">Seventh of the Night</option>
-                    <option value="TWILIGHT_ANGLE">Twilight Angle</option>
-                    <option value="NO_HIGH_LATITUDE_RULE">No High Latitude Rule</option>
-                </FormField>
+                <Row>
+                  <FormField name="prayerConfig.ishaInterval" label="Isha Interval" type="number" />
+                  <FormField name="prayerConfig.highLatitudeRule" label="High Latitude Rule" as="select">
+                      <option value="MIDDLE_OF_THE_NIGHT">Middle of the Night</option>
+                      <option value="SEVENTH_OF_THE_NIGHT">Seventh of the Night</option>
+                      <option value="TWILIGHT_ANGLE">Twilight Angle</option>
+                      <option value="NO_HIGH_LATITUDE_RULE">No High Latitude Rule</option>
+                  </FormField>
               </Row>
               
               <h6 className="mt-4 mb-3">Prayer Adjustments (minutes)</h6>
@@ -226,9 +221,9 @@ export default function CreateMasjidForm() {
               </Row>
 
               <div className="mt-4">
-                {formStatus && (
-                  <Alert variant={formStatus.type}>
-                    {formStatus.message}
+                {errorMessage && (
+                  <Alert variant="danger">
+                    {errorMessage}
                   </Alert>
                 )}
                 <Button type="submit" disabled={isSubmitting} variant="primary">
