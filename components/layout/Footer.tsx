@@ -7,7 +7,7 @@ const Footer = () => {
       <Container fluid>
         <Row>
           <Col xs={12} className="text-center">
-            {currentYear} © masjids.io - Theme by <b>{developedBy}</b>
+            {currentYear} © masjids.io - Created by <b>{developedBy}</b>
           </Col>
         </Row>
       </Container>

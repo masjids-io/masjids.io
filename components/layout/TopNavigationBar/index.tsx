@@ -23,22 +23,6 @@ const TopNavigationBar = () => {
           <TopbarTitle />
         </div>
         <ul className="topbar-menu d-flex align-items-center gap-3">
-          <Dropdown as={'li'} className="d-lg-none">
-            <DropdownToggle
-              as={'a'}
-              className="nav-link  arrow-none"
-              data-bs-toggle="dropdown"
-              role="button"
-              aria-haspopup="false"
-              aria-expanded="false">
-              <IconifyIcon icon="mdi:magnify" className="fs-2" />
-            </DropdownToggle>
-            <DropdownMenu className="dropdown-menu-animated dropdown-lg p-0">
-              <form className="p-3">
-                <input type="search" className="form-control" placeholder="Search ..." aria-label="Recipient's username" />
-              </form>
-            </DropdownMenu>
-          </Dropdown>
 
 
           <NotificationDropdown notifications={notifications} />

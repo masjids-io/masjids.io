@@ -1,5 +1,6 @@
 'use client'
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import useLocalStorage from '@/hooks/useLocalStorage'
 import useQueryParams from '@/hooks/useQueryParams'
@@ -11,7 +12,6 @@ import type {
   LayoutState,
   LayoutType,
   MenuType,
-  OffcanvasControlType,
   ThemeType,
 } from '@/types/context'
 import { toggleDocumentAttribute } from '@/utils/layout'
@@ -26,14 +26,13 @@ const useLayoutContext = () => {
   return context
 }
 
-// const getPreferredTheme = (): ThemeType => (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-
 const LayoutProvider = ({ children }: ChildrenType) => {
   const params = useQueryParams()
+  const isInitialMount = useRef(true)
 
   const override = !!(params.layout_theme || params.topbar_theme || params.menu_theme || params.menu_size || params.layout_mode || params.layout_position)
 
-  const INIT_STATE: LayoutState = {
+  const INIT_STATE: LayoutState = useMemo(() => ({
     theme: params['layout_theme'] ? (params['layout_theme'] as ThemeType) : 'light',
     topbarTheme: params['topbar_theme'] ? (params['topbar_theme'] as ThemeType) : 'light',
     menu: {
@@ -42,7 +41,7 @@ const LayoutProvider = ({ children }: ChildrenType) => {
     },
     position: params['layout_position'] ? (params['layout_position'] as LayoutPositionType) : 'fixed',
     mode: params['layout_mode'] ? (params['layout_mode'] as LayoutModeType) : 'fluid',
-  }
+  }), [params])
 
   const [settings, setSettings] = useLocalStorage<LayoutState>('__masjids.io_NEXT_CONFIG__', INIT_STATE, override)
   const [offcanvasStates, setOffcanvasStates] = useState<LayoutOffcanvasStatesType>({
@@ -50,53 +49,63 @@ const LayoutProvider = ({ children }: ChildrenType) => {
     showBackdrop: false,
   })
 
-  // update settings
-  const updateSettings = (_newSettings: Partial<LayoutState>) => setSettings({ ...settings, ..._newSettings })
+  const stableFunctions = useRef({
+    updateSettings: (newSettings: Partial<LayoutState>) => {
+      setSettings(prev => ({ ...prev, ...newSettings }))
+    },
+    changeTheme: (newTheme: ThemeType) => {
+      setSettings(prev => ({ ...prev, theme: newTheme }))
+    },
+    changeTopbarTheme: (newTheme: ThemeType) => {
+      setSettings(prev => ({ ...prev, topbarTheme: newTheme }))
+    },
+    changePosition: (newLayoutPosition: LayoutPositionType) => {
+      setSettings(prev => ({ ...prev, position: newLayoutPosition }))
+    },
+    changeMode: (newMode: LayoutModeType) => {
+      setSettings(prev => ({ ...prev, mode: newMode }))
+    },
+    changeMenuTheme: (newTheme: MenuType['theme']) => {
+      setSettings(prev => ({
+        ...prev,
+        menu: { ...prev.menu, theme: newTheme }
+      }))
+    },
+    changeMenuSize: (newSize: MenuType['size']) => {
+      setSettings(prev => ({
+        ...prev,
+        menu: { ...prev.menu, size: newSize }
+      }))
+    },
+    toggleThemeCustomizer: () => {
+      setOffcanvasStates(prev => ({
+        ...prev,
+        showThemeCustomizer: !prev.showThemeCustomizer
+      }))
+    },
+    toggleBackdrop: () => {
+      setOffcanvasStates(prev => ({
+        ...prev,
+        showBackdrop: !prev.showBackdrop
+      }))
+    },
+    resetSettings: () => {
+      setSettings(INIT_STATE)
+    }
+  })
 
-  // update theme mode
-  const changeTheme = (newTheme: ThemeType) => {
-    updateSettings({ theme: newTheme })
-  }
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      return
+    }
 
-  const changePosition = (newLayoutPosition: LayoutPositionType) => {
-    updateSettings({ position: newLayoutPosition })
-  }
-
-  const changeMode = (newMode: LayoutModeType) => {
-    updateSettings({ mode: newMode })
-  }
-
-  // change topbar theme
-  const changeTopbarTheme = (newTheme: ThemeType) => {
-    updateSettings({ topbarTheme: newTheme })
-  }
-
-  // change menu theme
-  const changeMenuTheme = (newTheme: MenuType['theme']) => {
-    updateSettings({ menu: { ...settings.menu, theme: newTheme } })
-  }
-
-  // change menu theme
-  const changeMenuSize = (newSize: MenuType['size']) => {
-    updateSettings({ menu: { ...settings.menu, size: newSize } })
-  }
-
-  // toggle theme customizer offcanvas
-  const toggleThemeCustomizer: OffcanvasControlType['toggle'] = () => {
-    setOffcanvasStates({ ...offcanvasStates, showThemeCustomizer: !offcanvasStates.showThemeCustomizer })
-  }
-
-  const themeCustomizer: LayoutType['themeCustomizer'] = {
-    open: offcanvasStates.showThemeCustomizer,
-    toggle: toggleThemeCustomizer,
-  }
-
-  // toggle backdrop
-  const toggleBackdrop = useCallback(() => {
     const htmlTag = document.getElementsByTagName('html')[0]
-    if (offcanvasStates.showBackdrop) htmlTag.classList.remove('sidebar-enable')
-    else htmlTag.classList.add('sidebar-enable')
-    setOffcanvasStates({ ...offcanvasStates, showBackdrop: !offcanvasStates.showBackdrop })
+    if (offcanvasStates.showBackdrop) {
+      htmlTag.classList.add('sidebar-enable')
+    } else {
+      htmlTag.classList.remove('sidebar-enable')
+    }
   }, [offcanvasStates.showBackdrop])
 
   useEffect(() => {
@@ -106,6 +115,7 @@ const LayoutProvider = ({ children }: ChildrenType) => {
     toggleDocumentAttribute('data-sidenav-size', settings.menu.size)
     toggleDocumentAttribute('data-layout-position', settings.position)
     toggleDocumentAttribute('data-layout-mode', settings.mode)
+
     return () => {
       toggleDocumentAttribute('data-bs-theme', settings.theme, true)
       toggleDocumentAttribute('data-topbar-color', settings.topbarTheme, true)
@@ -114,32 +124,51 @@ const LayoutProvider = ({ children }: ChildrenType) => {
       toggleDocumentAttribute('data-layout-position', settings.position, true)
       toggleDocumentAttribute('data-layout-mode', settings.mode, true)
     }
-  }, [settings])
+  }, [
+    settings.theme,
+    settings.topbarTheme,
+    settings.menu.theme,
+    settings.menu.size,
+    settings.position,
+    settings.mode
+  ])
 
-  const resetSettings = () => updateSettings(INIT_STATE)
+  const contextValue: LayoutType = useMemo(() => ({
+    ...settings,
+    themeMode: settings.theme,
+    changeTheme: stableFunctions.current.changeTheme,
+    changeTopbarTheme: stableFunctions.current.changeTopbarTheme,
+    changePosition: stableFunctions.current.changePosition,
+    changeMode: stableFunctions.current.changeMode,
+    changeMenu: {
+      theme: stableFunctions.current.changeMenuTheme,
+      size: stableFunctions.current.changeMenuSize,
+    },
+    themeCustomizer: {
+      open: offcanvasStates.showThemeCustomizer,
+      toggle: stableFunctions.current.toggleThemeCustomizer,
+    },
+    toggleBackdrop: stableFunctions.current.toggleBackdrop,
+    resetSettings: stableFunctions.current.resetSettings,
+  }), [
+    settings.theme,
+    settings.topbarTheme,
+    settings.menu.theme,
+    settings.menu.size,
+    settings.position,
+    settings.mode,
+    offcanvasStates.showThemeCustomizer,
+  ])
 
   return (
-    <ThemeContext.Provider
-      value={useMemo(
-        () => ({
-          ...settings,
-          themeMode: settings.theme,
-          changeTheme,
-          changeTopbarTheme,
-          changePosition,
-          changeMode,
-          changeMenu: {
-            theme: changeMenuTheme,
-            size: changeMenuSize,
-          },
-          themeCustomizer,
-          toggleBackdrop,
-          resetSettings,
-        }),
-        [settings, offcanvasStates],
-      )}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
-      {offcanvasStates.showBackdrop && <div className="offcanvas-backdrop fade show" onClick={toggleBackdrop} />}
+      {offcanvasStates.showBackdrop && (
+        <div
+          className="offcanvas-backdrop fade show"
+          onClick={stableFunctions.current.toggleBackdrop}
+        />
+      )}
     </ThemeContext.Provider>
   )
 }

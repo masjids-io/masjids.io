@@ -44,7 +44,7 @@ export default function Login() {
                 setError(result.error);
                 setSubmitting(false); // Manually set submitting to false on error
             } else if (result?.ok) {
-                router.push('/');
+                router.push('/home');
                 // On success, Formik automatically handles the end of submission
             }
         },

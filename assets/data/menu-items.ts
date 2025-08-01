@@ -16,4 +16,14 @@ export const MENU_ITEMS: MenuItemType[] = [
     },
     url: '/home',
   },
+    {
+    key: 'masjids',
+    icon: 'material-symbols:mosque',
+    label: 'masjids',
+    badge: {
+      text: '',
+      variant: 'success',
+    },
+    url: '/masjids',
+  },
 ]
