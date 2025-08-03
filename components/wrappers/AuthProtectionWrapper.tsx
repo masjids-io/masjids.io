@@ -50,7 +50,7 @@ const AuthProtectionWrapper = ({ children }: ChildrenType) => {
     if (shouldSignOut) {
         hasRedirected.current = true;
         // Using signOut is best because it clears the invalid session cookie.
-        signOut({ callbackUrl: '/login' });
+        router.replace('/login');
     }
 
   }, [status, session]); // router can be removed from dependencies if only used for signOut
