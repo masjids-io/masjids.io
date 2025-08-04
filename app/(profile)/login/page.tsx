@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -19,10 +19,31 @@ const LoginSchema = Yup.object().shape({
     .required('Password is required'),
 });
 
+// Loading component with Bootstrap 5 styling
+const LoadingSpinner = () => (
+  <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="text-center">
+      <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+        <span className="visually-hidden">Loading...</span>
+      </div>
+      <p className="mt-3 text-muted">Loading...</p>
+    </div>
+  </div>
+);
+
 export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  // Check if user is already authenticated
+  useEffect(() => {
+    if (status === 'authenticated' && session) {
+      // User is already logged in, redirect to home
+      router.replace('/home');
+    }
+  }, [status, session, router]);
 
   const formik = useFormik({
     initialValues: {
@@ -52,6 +73,17 @@ export default function Login() {
     },
   });
 
+  // Show loading spinner while checking authentication status
+  if (status === 'loading') {
+    return <LoadingSpinner />;
+  }
+
+  // If user is authenticated, don't render the login form (will redirect)
+  if (status === 'authenticated') {
+    return <LoadingSpinner />;
+  }
+
+  // Only render login form if user is unauthenticated
   return (
     <Layout headerLayout={11} logo="logo-flat">
       <section className="overflow-hidden h-screen md:h-auto md:mt-112 sm:mt-80">
@@ -129,7 +161,14 @@ export default function Login() {
 
                 <div className="col-12">
                   <button type="submit" className="button -md -accent -uppercase text-white" disabled={formik.isSubmitting}>
-                    {formik.isSubmitting ? 'Logging in...' : 'Login'}
+                    {formik.isSubmitting ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Logging in...
+                      </>
+                    ) : (
+                      'Login'
+                    )}
                   </button>
                 </div>
               </form>

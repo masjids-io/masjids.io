@@ -3,9 +3,9 @@ import { getServerSession } from 'next-auth/next';
 // You must import your authOptions from your next-auth configuration file.
 import { authOptions } from "@/lib/auth";
 
-// This is the handler for POST requests to /api/masjids
-// It creates a new masjid.
-export async function POST(request: Request) {
+// This is the handler for PATCH requests to /api/masjids/[id]
+// It updates an existing masjid's details.
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   try {
     // 1. Get the current user's session to ensure they are authenticated.
     const session = await getServerSession(authOptions);
@@ -25,36 +25,50 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Get the new masjid data from the incoming request body.
+    // 3. Get the masjid ID from the dynamic route parameters.
+    const { id } = params;
+    if (!id) {
+        return NextResponse.json({ error: 'Masjid ID is required in the URL.' }, { status: 400 });
+    }
+
+    // 4. Get the update data from the incoming request body.
     const body = await request.json();
 
-    // 4. Define the target URL for the real backend.
-    // Note: The endpoint for creating a single masjid is /masjid (singular)
+    // 5. IMPORTANT FOR SECURITY: Create the final payload for the backend.
+    //    We overwrite the ID in the body with the ID from the URL to prevent a user
+    //    from trying to update a different record.
+    const secureBody = {
+        ...body,
+        id: id,
+    };
+
+    // 6. Define the target URL for the real backend.
+    //    Based on your example, the backend endpoint for updates is singular.
     const api_url = "http://198.199.81.24/api/v1/masjid";
 
-    // 5. Make the fetch request to the real backend.
+    // 7. Make the fetch request to the real backend.
     const apiResponse = await fetch(api_url, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${bearerToken}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(secureBody),
     });
 
-    // 6. Check if the backend request was successful.
+    // 8. Check if the backend request was successful.
     if (!apiResponse.ok) {
       const errorResult = await apiResponse.json();
       console.error("Backend API Error:", errorResult);
       return NextResponse.json(
-        { error: 'Failed to create masjid.', details: errorResult },
+        { error: 'Failed to update masjid data.', details: errorResult },
         { status: apiResponse.status }
       );
     }
 
-    // 7. If successful, parse and return the response with a 201 status.
+    // 9. If successful, parse and return the response.
     const result = await apiResponse.json();
-    return NextResponse.json(result, { status: 201 }); // 201 Created
+    return NextResponse.json(result, { status: 200 }); // 200 OK
 
   } catch (error) {
     console.error("API Route Error:", error);

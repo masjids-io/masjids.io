@@ -1,6 +1,49 @@
-
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { jwtDecode } from "jwt-decode"; // Import the JWT decoding library
+
+// Extend the Session type to include the error property
+declare module "next-auth" {
+  interface Session {
+    error?: string;
+    accessToken?: string;
+  }
+}
+
+// This function will be called when the access token has expired.
+async function refreshAccessToken(token: any) {
+  try {
+    const response = await fetch("http://198.199.81.24/api/v1/auth/refresh_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        refreshToken: token.refreshToken, // Send the existing refresh token
+      }),
+    });
+
+    const refreshedTokens = await response.json();
+
+    if (!response.ok) {
+      throw refreshedTokens;
+    }
+
+    // The backend response should contain a new accessToken.
+    return {
+      ...token,
+      accessToken: refreshedTokens.accessToken,
+      refreshToken: refreshedTokens.refreshToken ?? token.refreshToken,
+    };
+  } catch (error) {
+    console.error("Error refreshing access token", error);
+    // If refresh fails, add an error flag to the token.
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -26,18 +69,16 @@ export const authOptions: NextAuthOptions = {
         
         const responseData = await res.json();
 
-        // Check for success status from your API
         if (!res.ok || responseData.status !== 'success') {
           throw new Error(responseData.message || "Invalid credentials");
         }
 
         const { authenticateUserData } = responseData;
 
-        // If the nested user data object exists, construct the user object for NextAuth
         if (authenticateUserData) {
           return {
             id: authenticateUserData.userId,
-            email: credentials.email, // Email is not in the response, so we pass it from the credentials form
+            email: credentials.email,
             accessToken: authenticateUserData.accessToken,
             refreshToken: authenticateUserData.refreshToken,
           };
@@ -49,26 +90,44 @@ export const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60,
   },
   callbacks: {
-    // This callback is called whenever a JWT is created or updated.
     async jwt({ token, user }) {
-      // The 'user' object is passed on the first sign-in.
-      // We are persisting the tokens and user id to the JWT.
+      // 1. Initial sign in
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.id = user.id;
+        token.email = user.email; 
+        return token;
       }
-      return token;
+
+      // 2. On subsequent requests, check if the token is expired by decoding it
+      try {
+        const decodedToken = jwtDecode<{ exp: number }>(token.accessToken as string);
+        
+        // The 'exp' claim is in seconds, Date.now() is in milliseconds.
+        if (decodedToken.exp * 1000 > Date.now()) {
+          // Token is still valid
+          return token;
+        }
+      } catch (error) {
+        console.error("Error decoding token, attempting to refresh.", error);
+        // If decoding fails, the token is likely invalid or expired, so we proceed to refresh.
+      }
+
+      // 3. Token has expired or is invalid, try to refresh it
+      console.log("Access token has expired, refreshing...");
+      return refreshAccessToken(token);
     },
-    // This callback is called whenever a session is checked.
     async session({ session, token }) {
-      // We are passing the tokens and user id to the client-side session.
+      // Pass data from the JWT to the client-side session
       if (token) {
-        session.accessToken = token.accessToken;
-        session.refreshToken = token.refreshToken;
         session.user.id = token.id;
+        session.user.email = token.email;
+        session.accessToken = token.accessToken;
+        session.error = token.error as string; // Pass error for client-side logout
       }
       return session;
     }
@@ -77,5 +136,5 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
     error: '/login',
   },
-  secret: 'your-super-secret-key',
+  secret: process.env.NEXTAUTH_SECRET || 'your-super-secret-key',
 };

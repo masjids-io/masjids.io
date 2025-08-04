@@ -1,38 +1,56 @@
-'use client'
-import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
-import { Suspense, useEffect } from 'react' // Import useEffect
+'use client';
 
-import type { ChildrenType } from '@/types/component-props'
-import FallbackLoading from '../FallbackLoading'
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Suspense, useEffect, useRef } from 'react';
 
-const AuthProtectionWrapper = ({ children }: ChildrenType) => {
-  const { status } = useSession()
-  const { push } = useRouter()
-  // The pathname is not used in the logic, so it can be removed if not needed elsewhere.
-  // const pathname = usePathname()
-
-  useEffect(() => {
-    // This effect runs when the 'status' changes.
-    // If the user is unauthenticated, redirect them to the login page.
-    if (status === 'unauthenticated') {
-      push(`/login`)
-    }
-  }, [status, push]) // Dependency array ensures this runs only when status or push changes.
-
-  // While the session is being checked, show a loading indicator.
-  if (status === 'loading') {
-    return <FallbackLoading />
-  }
-
-  // If the user is authenticated, render the children.
-  // The unauthenticated case is handled by the redirect in useEffect.
-  if (status === 'authenticated') {
-    return <Suspense>{children}</Suspense>
-  }
-
-  // Render a fallback for the unauthenticated case while redirecting.
-  return <FallbackLoading />
+interface ChildrenType {
+  children: React.ReactNode;
 }
 
-export default AuthProtectionWrapper
+const FallbackLoading = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '100vh', 
+    width: '100%', 
+    background: '#fff' 
+  }}>
+    <p>Loading...</p>
+  </div>
+);
+
+const AuthProtectionWrapper = ({ children }: ChildrenType) => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const hasRedirected = useRef(false);
+
+  useEffect(() => {
+    // Only redirect once and when we're sure the user is unauthenticated
+    if (status === 'unauthenticated' && !hasRedirected.current) {
+      hasRedirected.current = true;
+      router.replace('/login'); // Use replace instead of push
+    }
+  }, [status, router]);
+
+  // Show loading while session is being determined
+  if (status === 'loading') {
+    return <FallbackLoading />;
+  }
+
+  // If unauthenticated, show loading while redirecting
+  if (status === 'unauthenticated') {
+    return <FallbackLoading />;
+  }
+
+  // Only render children if authenticated
+  if (status === 'authenticated' && session) {
+    return <Suspense fallback={<FallbackLoading />}>{children}</Suspense>;
+  }
+
+  // Fallback
+  return <FallbackLoading />;
+};
+
+export default AuthProtectionWrapper;

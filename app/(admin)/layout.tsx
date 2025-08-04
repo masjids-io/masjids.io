@@ -14,7 +14,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
   return (
     <AppProvidersWrapper>
       <div>
-        {/* <AuthProtectionWrapper> */}
+        <AuthProtectionWrapper>
         <div className="wrapper">
           <Suspense fallback={<FallbackLoading />}>
             <TopNavigationBar />
@@ -34,7 +34,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
             </div>
           </div>
         </div>
-        {/* </AuthProtectionWrapper> */}
+        </AuthProtectionWrapper>
       </div>
     </AppProvidersWrapper>
   )

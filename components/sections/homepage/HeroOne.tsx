@@ -8,7 +8,22 @@ interface Props {
 }
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 export default function HeroOne({ bgPath, textWhite }: Props) {
+    // State to hold the search query from the input field
+    const router = useRouter();
+    const [searchQuery, setSearchQuery] = useState('')
+
+    // Function to handle form submission
+    const handleSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault() // Prevent the default form action
+        if (!searchQuery.trim()) return // Don't search if the input is empty
+
+        // Redirect to the search page with the query in the URL
+        // encodeURIComponent handles spaces and special characters
+        router.push(`/masjid-detail/search/${encodeURIComponent(searchQuery)}`)
+    }
     return (
         <>
             <section className="masthead -type-1 overflow-hidden">
@@ -34,23 +49,27 @@ export default function HeroOne({ bgPath, textWhite }: Props) {
                                 </p>
 
                                 {/* search */}
-                                <div className="masthead__search mt-32 wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
-                                    {/* Use a relative container instead of input-group */}
+                                <form
+                                    className="masthead__search mt-32 wow animate__animated animate__fadeInUp"
+                                    data-wow-delay=".3s"
+                                    onSubmit={handleSearchSubmit} // Add the onSubmit handler
+                                >
                                     <div className="modern-search-wrapper">
                                         <input
                                             type="text"
                                             className="form-control form-control-lg"
                                             placeholder="Search by city, area, or name..."
                                             aria-label="Find a Masjid"
+                                            value={searchQuery} // Bind value to state
+                                            onChange={(e) => setSearchQuery(e.target.value)} // Update state on change
                                         />
                                         <button className="modern-search-button" type="submit" aria-label="Search">
-                                            {/* Using a high-quality SVG icon for sharpness */}
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
                                             </svg>
                                         </button>
                                     </div>
-                                </div>
+                                </form>
                                 {/* end search */}
 
                                 <div className="masthead__buttons row y-gap-10 pt-32 md:pt-20">
