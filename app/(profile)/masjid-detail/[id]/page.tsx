@@ -1,13 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Layout from '@/components/layout/Layout'
 import * as Icon from 'react-feather'
 import Image from 'next/image'
 import * as adhan from 'adhan'
 import moment from 'moment'
-import AuthProtectionWrapper from '@/components/wrappers/AuthProtectionWrapper'
 
 // Define the TypeScript type for the masjid data from the API
 type Masjid = {
@@ -87,6 +86,7 @@ export default function MasjidSingle() {
     const [error, setError] = useState<string | null>(null);
 
     const params = useParams();
+    const router = useRouter();
     const id = params.id as string;
 
     useEffect(() => {
@@ -97,38 +97,43 @@ export default function MasjidSingle() {
             setError(null);
             try {
                 const response = await fetch(`/api/masjids/${id}`);
+
+                // Redirect if unauthorized
+                if (response.status === 401) {
+                    router.push('/login'); // Ganti '/login' dengan rute halaman login Anda
+                    return; 
+                }
+
+                // Handle other errors
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.error || "Failed to fetch masjid data.");
+                    throw new Error(errorData.error || "Gagal mengambil data masjid.");
                 }
+                
                 const result = await response.json();
                 
                 if (!result.Masjid) {
-                    throw new Error("Masjid data not found in response.");
+                    throw new Error("Data masjid tidak ditemukan dalam respons.");
                 }
                 
                 const data: Masjid = result.Masjid;
                 setMasjidData(data);
 
                 // --- Calculate Prayer Times ---
-                // NOTE: Using fallback coordinates. A real app would store lat/lng with the masjid.
-                const coordinates = new adhan.Coordinates(-8.5833, 116.1167);
+                const coordinates = new adhan.Coordinates(-8.5833, 116.1167); // Koordinat Mataram
                 
-                // --- FIX: Use the helper function to get the correct calculation parameters ---
                 const prayerParams = getAdhanMethod(data.prayerConfig.method);
                 
-                // Apply custom angles and high latitude rule
                 if (data.prayerConfig.fajrAngle) prayerParams.fajrAngle = data.prayerConfig.fajrAngle;
                 if (data.prayerConfig.ishaAngle) prayerParams.ishaAngle = data.prayerConfig.ishaAngle;
                 if (data.prayerConfig.highLatitudeRule) {
                     prayerParams.highLatitudeRule = getHighLatitudeRule(data.prayerConfig.highLatitudeRule);
                 }
                 
-                // Manually create the adjustments object in the correct format
                 if (data.prayerConfig.adjustments) {
                     prayerParams.adjustments = {
                         fajr: data.prayerConfig.adjustments.fajrAdjustment || 0,
-                        sunrise: 0, // Add the required 'sunrise' property
+                        sunrise: 0,
                         dhuhr: data.prayerConfig.adjustments.dhuhrAdjustment || 0,
                         asr: data.prayerConfig.adjustments.asrAdjustment || 0,
                         maghrib: data.prayerConfig.adjustments.maghribAdjustment || 0,
@@ -140,11 +145,11 @@ export default function MasjidSingle() {
                 const prayers = new adhan.PrayerTimes(coordinates, date, prayerParams);
 
                 setPrayerTimes({
-                    Fajr: moment(prayers.fajr).format("hh:mm A"),
-                    Dhuhr: moment(prayers.dhuhr).format("hh:mm A"),
-                    Asr: moment(prayers.asr).format("hh:mm A"),
-                    Maghrib: moment(prayers.maghrib).format("hh:mm A"),
-                    Isha: moment(prayers.isha).format("hh:mm A"),
+                    Fajr: moment(prayers.fajr).format("HH:mm"),
+                    Dhuhr: moment(prayers.dhuhr).format("HH:mm"),
+                    Asr: moment(prayers.asr).format("HH:mm"),
+                    Maghrib: moment(prayers.maghrib).format("HH:mm"),
+                    Isha: moment(prayers.isha).format("HH:mm"),
                 });
 
             } catch (err: any) {
@@ -155,7 +160,7 @@ export default function MasjidSingle() {
         };
 
         fetchMasjidData();
-    }, [id]);
+    }, [id, router]);
 
     const imageStyle = {
         width: '100%',
@@ -177,7 +182,6 @@ export default function MasjidSingle() {
 
     return (
         <>
-        <AuthProtectionWrapper>
             <Layout>
                 <div>
                     <section className="pt-100 layout-pb-sm">
@@ -276,7 +280,6 @@ export default function MasjidSingle() {
                     </section>
                 </div>
             </Layout>
-            </AuthProtectionWrapper>
         </>
     )
 }
