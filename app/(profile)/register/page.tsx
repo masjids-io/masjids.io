@@ -27,9 +27,6 @@ const RegistrationSchema = Yup.object().shape({
         .matches(/^[0-9]+$/, "Must be only digits")
         .min(8, 'Must be at least 8 digits')
         .required('Phone number is required'),
-    role: Yup.string()
-        .oneOf(['MASJID_MEMBER', 'MASJID_VOLUNTEER', 'MASJID_ADMIN', 'MASJID_IMAM'], 'Please select a valid role')
-        .required('Role is required'),
     gender: Yup.string()
         .oneOf(['MALE', 'FEMALE'], 'Please select a gender')
         .required('Gender is required'),
@@ -53,7 +50,6 @@ export default function Register() {
             lastName: '',
             email: '',
             phoneNumber: '',
-            role: 'UNSPECIFIED',
             gender: '',
             password: '',
             confirm_password: '',
@@ -72,7 +68,6 @@ export default function Register() {
                     lastName: values.lastName,
                     phoneNumber: values.phoneNumber,
                     gender: values.gender,
-                    role: values.role,
                 };
 
                 const apiUrl = `/api/register`;
@@ -146,17 +141,7 @@ export default function Register() {
                                     </div>
 
                                     {/* Role */}
-                                    <div className="col-12 col-md-6">
-                                        <select name="role" className="form-select" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.role}>
-                                            <option value="UNSPECIFIED" disabled>Select Your Role</option>
-                                            <option value="UNSPECIFIED" >UNSPECIFIED</option>
-                                            <option value="MASJID_MEMBER">Masjid Member</option>
-                                            <option value="MASJID_VOLUNTEER">Masjid Volunteer</option>
-                                            <option value="MASJID_ADMIN">Masjid Admin</option>
-                                            <option value="MASJID_IMAM">Masjid Imam</option>
-                                        </select>
-                                        {formik.touched.role && formik.errors.role ? <div className="text-danger text-sm mt-1">{formik.errors.role}</div> : null}
-                                    </div>
+  
 
                                     {/* Gender */}
                                     <div className="col-12 col-md-6">

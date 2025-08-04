@@ -7,6 +7,7 @@ import * as Icon from 'react-feather'
 import Image from 'next/image'
 import * as adhan from 'adhan'
 import moment from 'moment'
+import AuthProtectionWrapper from '@/components/wrappers/AuthProtectionWrapper'
 
 // Define the TypeScript type for the masjid data from the API
 type Masjid = {
@@ -176,6 +177,7 @@ export default function MasjidSingle() {
 
     return (
         <>
+        <AuthProtectionWrapper>
             <Layout>
                 <div>
                     <section className="pt-100 layout-pb-sm">
@@ -274,6 +276,7 @@ export default function MasjidSingle() {
                     </section>
                 </div>
             </Layout>
+            </AuthProtectionWrapper>
         </>
     )
 }
