@@ -89,25 +89,7 @@ export default function Services1() {
 
 
                     {/* Final CTA Section */}
-                    <section className="layout-pt-sm layout-pb-lg">
-                        <div className="container">
-                            <div className="relative rounded-16">
-                                <div className="absolute-full-center z--1">
-                                    <div className="bg-image rounded-16 js-lazy" style={{ backgroundImage: 'url("/img/home-1/cta/cta.png")' }} />
-                                </div>
-                                <div className="py-50 px-64">
-                                    <div className="row y-gap-32 justify-between items-center">
-                                        <div className="col-auto">
-                                            <h3 className="text-30 lh-15 text-white">Empower Your Masjid Today.</h3>
-                                        </div>
-                                        <div className="col-auto">
-                                            <button className="button -md -white text-accent">Choose Your Plan</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+
                 </div>
             </Layout>
         </>
