@@ -41,7 +41,7 @@ export default function Login() {
   useEffect(() => {
     if (status === 'authenticated' && session) {
       // User is already logged in, redirect to home
-      router.replace('/home');
+      window.location.href = '/home';
     }
   }, [status, session, router]);
 
@@ -65,7 +65,7 @@ export default function Login() {
 
       if (result?.ok) {
         // On success, redirect to the home page
-        router.push('/home');
+        window.location.href = '/home';
       } else {
         // On failure, display a user-friendly error message
         setError('The email or password you entered is incorrect. Please try again.');

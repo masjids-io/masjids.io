@@ -26,4 +26,14 @@ export const MENU_ITEMS: MenuItemType[] = [
     },
     url: '/masjids',
   },
+      {
+    key: 'users-managements',
+    icon: 'material-symbols:supervised-user-circle',
+    label: 'User Managements',
+    badge: {
+      text: '',
+      variant: 'success',
+    },
+    url: '/users-managements',
+  },
 ]
