@@ -46,11 +46,7 @@ const columns: ColumnDef<Masjid>[] = [
   {
     header: 'Status',
     accessorKey: 'isVerified',
-    cell: ({ getValue }) => (
-      <Badge bg={getValue() ? 'success' : 'warning'}>
-        {getValue() ? 'Verified' : 'Pending'}
-      </Badge>
-    ),
+    cell: ({ getValue }) => <Badge bg={getValue() ? 'success' : 'warning'}>{getValue() ? 'Verified' : 'Pending'}</Badge>,
   },
   {
     header: 'Last Updated',
@@ -95,7 +91,7 @@ export default function TableMasjids({ initialSearchTerm }: TableMasjidsProps) {
 
   // Use the prop to set the initial state of the search term
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm || '')
-  
+
   const [filterBy, setFilterBy] = useState('name')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm)
 
@@ -152,6 +148,8 @@ export default function TableMasjids({ initialSearchTerm }: TableMasjidsProps) {
         }
       } catch (err: any) {
         setError(err.message)
+        setMasjids([])
+        setPageCount(0)
       } finally {
         setLoading(false)
       }
@@ -167,24 +165,15 @@ export default function TableMasjids({ initialSearchTerm }: TableMasjidsProps) {
           <Card.Header>
             <Row className="justify-content-between align-items-center gy-3">
               <Col md={5}>
-                 <h4 className="header-title mb-0">Masjids Found</h4>
+                <h4 className="header-title mb-0">Masjids Found</h4>
               </Col>
               <Col md={7}>
                 <InputGroup>
-                  <Form.Select
-                    value={filterBy}
-                    onChange={(e) => setFilterBy(e.target.value)}
-                    style={{ flex: '0 0 150px' }}
-                  >
+                  <Form.Select value={filterBy} onChange={(e) => setFilterBy(e.target.value)} style={{ flex: '0 0 150px' }}>
                     <option value="name">Filter by Name</option>
                     <option value="location">Filter by Location</option>
                   </Form.Select>
-                  <Form.Control
-                    type="text"
-                    placeholder={`Search by ${filterBy}...`}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+                  <Form.Control type="text" placeholder={`Search by ${filterBy}...`} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                 </InputGroup>
               </Col>
             </Row>
@@ -205,7 +194,13 @@ export default function TableMasjids({ initialSearchTerm }: TableMasjidsProps) {
                 rowsPerPageList={sizePerPageList}
                 tableClass="table-striped"
                 showPagination
-                // Pass state and handlers for server-side pagination
+                // --- FIX: Props for server-side pagination are now passed ---
+                pagination={pagination}
+                onPaginationChange={setPagination}
+                pageCount={pageCount}
+                options={{
+                  manualPagination: true,
+                }}
               />
             )}
           </CardBody>

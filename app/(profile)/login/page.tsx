@@ -41,7 +41,7 @@ export default function Login() {
   useEffect(() => {
     if (status === 'authenticated' && session) {
       // User is already logged in, redirect to home
-      router.replace('/home');
+      window.location.href = '/home';
     }
   }, [status, session, router]);
 
@@ -65,7 +65,7 @@ export default function Login() {
 
       if (result?.ok) {
         // On success, redirect to the home page
-        router.push('/home');
+        window.location.href = '/home';
       } else {
         // On failure, display a user-friendly error message
         setError('The email or password you entered is incorrect. Please try again.');
@@ -92,7 +92,7 @@ export default function Login() {
           <div className="col-lg-6 h-1/1 relative md:h-300">
             <div className="bg-image absolute-full-center" style={{ backgroundImage: 'url("/img/forms/bg.png")', filter: 'blur(1px)' }} />
             <div className="pl-60 md:pl-0 absolute-full-center z-2">
-              <div className="pl-120 lg:pl-48 md:pl-0 pt-120 md:pt-100">
+              <div className="pl-120 lg:pl-48 md:pl-45 pt-120 md:pt-80">
                   <div className="md:container">
                     <h1 className="text-4xl md:text-3xl text-white">Welcome to<br /> masjids.io</h1>
                   </div>

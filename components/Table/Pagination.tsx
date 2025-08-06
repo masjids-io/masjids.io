@@ -24,7 +24,7 @@ const Pagination = <RowType,>({ table, rowsPerPageList, currentPage, totalPages,
 
   useEffect(() => {
     setVisiblePages(getVisiblePages(totalPages, currentPage))
-  }, [currentPage])
+  }, [currentPage, totalPages])
 
   return (
     <div className="align-items-center justify-content-between row g-0 text-center text-sm-start p-3 border-top">
