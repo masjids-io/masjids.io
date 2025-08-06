@@ -1,9 +1,22 @@
 import { MENU_ITEMS } from '@/assets/data/menu-items'
 import type { MenuItemType } from '@/types/menu'
 
-export const getMenuItems = (): MenuItemType[] => {
-  return MENU_ITEMS
+export const getMenuItems = (userRole?: string): MenuItemType[] => {
+  const filteredMenuItems = MENU_ITEMS.filter((item) => {
+    // If the item has no 'roles' property defined, it's public for everyone.
+    if (!item.roles || item.roles.length === 0) {
+      return true
+    }
+    // If the user has a role and their role is included in the item's 'roles' array, show it.
+    if (userRole && item.roles.includes(userRole)) {
+      return true
+    }
+    // Otherwise, hide the item.
+    return false
+  })
+  return filteredMenuItems
 }
+
 
 export const findAllParent = (menuItems: MenuItemType[], menuItem: MenuItemType): string[] => {
   let parents: string[] = []

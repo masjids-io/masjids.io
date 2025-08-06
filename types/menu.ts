@@ -14,6 +14,7 @@ export type MenuItemType = {
   target?: HTMLAttributeAnchorTarget
   isDisabled?: boolean
   children?: MenuItemType[]
+  roles?: string[]
 }
 
 export type TabMenuItem = {

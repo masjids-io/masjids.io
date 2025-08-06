@@ -24,15 +24,10 @@ const faqData: FaqItem[] = [
     {
         id: 3,
         question: "Is there a mobile app for our community members?",
-        answer: "Yes, Masjids.io provides dedicated mobile apps for both iOS and Android. This allows your community members to easily access prayer times, receive notifications, view events, and donate directly from their smartphones."
+        answer: "Yes, Masjids.io provides dedicated mobile apps for both iOS and Android. This allows your community members to easily access prayer times, receive notifications and view events directly from their smartphones."
     },
     {
         id: 4,
-        question: "How does the online donation system work?",
-        answer: "Our secure donation system allows members to contribute to your masjid easily and safely online. Masjids can create multiple donation campaigns (e.g., for Zakat, Sadaqah, or building funds) and track all contributions through the admin dashboard."
-    },
-    {
-        id: 5,
         question: "Can we customize our masjid's page?",
         answer: "Absolutely. You have full control to customize your masjid's page with your logo, branding, photos, and information. You can also manage and post your own prayer schedules, events, and announcements to keep your community informed."
     }

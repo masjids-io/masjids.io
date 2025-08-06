@@ -5,6 +5,7 @@ export const MENU_ITEMS: MenuItemType[] = [
     key: 'menu',
     label: 'Main',
     isTitle: true,
+    
   },
   {
     key: 'home',
@@ -17,6 +18,12 @@ export const MENU_ITEMS: MenuItemType[] = [
     url: '/home',
   },
     {
+    key: 'menu',
+    label: 'admin',
+    isTitle: true,
+    roles: ['MASJID_ADMIN'], 
+  },
+    {
     key: 'masjids',
     icon: 'material-symbols:mosque',
     label: 'masjids',
@@ -25,6 +32,7 @@ export const MENU_ITEMS: MenuItemType[] = [
       variant: 'success',
     },
     url: '/masjids',
+    roles: ['MASJID_ADMIN'], 
   },
       {
     key: 'users-managements',
@@ -35,5 +43,6 @@ export const MENU_ITEMS: MenuItemType[] = [
       variant: 'success',
     },
     url: '/users-managements',
+    roles: ['MASJID_ADMIN'], 
   },
 ]

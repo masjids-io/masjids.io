@@ -127,10 +127,10 @@ export default function EditUserForm() {
     }
 
     // Reusable helper component for form fields
-    const FormField = ({ name, label, type = 'text', as = 'input', children }: { name: string; label: string; type?: string; as?: string; children?: React.ReactNode }) => (
+    const FormField = ({ name, label, type = 'text', as = 'input', disabled = false, children }: { name: string; label: string; type?: string; as?: string; disabled?: boolean; children?: React.ReactNode }) => (
         <Form.Group as={Col} md="6" controlId={name} className="mb-3">
             <Form.Label>{label}</Form.Label>
-            <Field name={name} type={type} as={as === 'select' ? Form.Select : Form.Control}>
+            <Field name={name} type={type} as={as === 'select' ? Form.Select : Form.Control} disabled={disabled}>
                 {children}
             </Field>
             <ErrorMessage name={name} component={Form.Text} className="text-danger" />
@@ -159,20 +159,17 @@ export default function EditUserForm() {
                     {({ isSubmitting }) => (
                         <FormikForm>
                             <h5 className="mb-3">User Information</h5>
+                            {/* --- MODIFICATION: Added 'disabled' prop to all fields except 'role' --- */}
                             <Row>
-                                <FormField name="firstName" label="First Name" />
-                                <FormField name="lastName" label="Last Name" />
+                                <FormField name="firstName" label="First Name" disabled={true} />
+                                <FormField name="lastName" label="Last Name" disabled={true} />
                             </Row>
                             <Row>
-                                <FormField name="email" label="Email" type="email" />
-                                <FormField name="username" label="Username" />
+                                <FormField name="email" label="Email" type="email" disabled={true} />
+                                <FormField name="username" label="Username" disabled={true} />
                             </Row>
                             <Row>
-                                <FormField name="password" label="New Password (Optional)" type="password" />
-                                <FormField name="phoneNumber" label="Phone Number" />
-                            </Row>
-                            <Row>
-                                <FormField name="gender" label="Gender" as="select">
+                                <FormField name="gender" label="Gender" as="select" disabled={true}>
                                     <option value="MALE">Male</option>
                                     <option value="FEMALE">Female</option>
                                     <option value="UNSPECIFIED">Unspecified</option>
@@ -192,7 +189,7 @@ export default function EditUserForm() {
                                     {isSubmitting ? (
                                         <><Spinner as="span" animation="border" size="sm" /> Submitting...</>
                                     ) : (
-                                        'Update User'
+                                        'Update User Role'
                                     )}
                                 </Button>
                             </div>
