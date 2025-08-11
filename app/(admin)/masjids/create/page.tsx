@@ -12,9 +12,11 @@ import {
   Alert,
   Spinner,
 } from 'react-bootstrap';
-import { useRouter } from 'next/navigation'; // Import the useRouter hook
+import { useRouter } from 'next/navigation';
+import BootstrapPhoneInput from '@/components/forms/BootstrapPhoneInput';
 
-// Validation Schema using Yup to match the nested JSON structure
+
+// Updated validation schema - simplified phone number validation since BootstrapPhoneInput handles formatting
 const masjidValidationSchema = Yup.object().shape({
   name: Yup.string().required('Masjid name is required'),
   location: Yup.string().required('Location is required'),
@@ -27,11 +29,10 @@ const masjidValidationSchema = Yup.object().shape({
     city: Yup.string().required('City is required'),
     country_code: Yup.string().required('Country code is required').length(2, 'Must be 2 characters'),
   }),
-  phoneNumber: Yup.object().shape({
-    country_code: Yup.string().required('Country code is required'),
-    number: Yup.string().required('Phone number is required'),
-    extension: Yup.string(), // Optional
-  }),
+  // Simplified phone validation - BootstrapPhoneInput returns E.164 format
+  phoneNumber: Yup.string()
+    .required('Phone number is required')
+    .matches(/^\+[1-9]\d{1,14}$/, 'Please enter a valid phone number'),
   prayerConfig: Yup.object().shape({
     method: Yup.string().required('Prayer method is required'),
     fajrAngle: Yup.number().typeError('Must be a number').required('Fajr angle is required'),
@@ -51,10 +52,10 @@ const masjidValidationSchema = Yup.object().shape({
 
 // Main Form Component
 export default function CreateMasjidForm() {
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Default values for the form fields
+  // Updated initial values - simplified phone number structure
   const initialValues = {
     name: '',
     location: 'Indonesia',
@@ -67,11 +68,7 @@ export default function CreateMasjidForm() {
       city: 'Mataram',
       country_code: 'ID',
     },
-    phoneNumber: {
-      country_code: '62',
-      number: '',
-      extension: '',
-    },
+    phoneNumber: '', // Now a simple string for E.164 format
     prayerConfig: {
       method: 'MUSLIM_WORLD_LEAGUE',
       fajrAngle: 18,
@@ -92,21 +89,28 @@ export default function CreateMasjidForm() {
   const handleSubmit = async (values: typeof initialValues, { setSubmitting }: any) => {
     setErrorMessage(null);
     try {
-      // The form will post to our Next.js API route, which then securely forwards the request.
+      // Transform the phone number back to your expected format if needed
+      const transformedValues = {
+        ...values,
+        phoneNumber: {
+          country_code: values.phoneNumber.slice(1, values.phoneNumber.indexOf(' ') > 0 ? values.phoneNumber.indexOf(' ') : 3),
+          number: values.phoneNumber.replace(/^\+\d{1,3}\s?/, ''),
+          extension: '', // You might want to handle this differently
+        }
+      };
+
       const response = await fetch('/api/masjids/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: JSON.stringify(transformedValues),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        // Use the error message from the backend if available
         throw new Error(result.error || `Request failed with status ${response.status}`);
       }
 
-      // On success, redirect to the masjids page
       router.push('/masjids');
 
     } catch (error: any) {
@@ -116,7 +120,7 @@ export default function CreateMasjidForm() {
     }
   };
 
-  // Reusable helper component for form fields.
+  // Reusable helper component for form fields
   const FormField = ({ name, label, type = 'text', as = 'input', children }: { name: string, label: string, type?: string, as?: string, children?: React.ReactNode }) => (
     <Form.Group as={Col} md="6" controlId={name} className="mb-3">
       <Form.Label>{label}</Form.Label>
@@ -149,7 +153,7 @@ export default function CreateMasjidForm() {
               <Form.Group className="mb-4">
                   <Field as={Form.Check} type="checkbox" name="is_verified" id="is_verified" label="Is Verified" />
               </Form.Group>
-              
+             
               <hr />
               <h5 className="mb-3">Address</h5>
               <Row>
@@ -168,9 +172,10 @@ export default function CreateMasjidForm() {
               <hr />
               <h5 className="mb-3">Phone Number</h5>
               <Row>
-                <FormField name="phoneNumber.country_code" label="Country Code" />
-                <FormField name="phoneNumber.number" label="Number" />
-                <FormField name="phoneNumber.extension" label="Extension (Optional)" />
+                <Form.Group as={Col} md="12" className="mb-3">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Field name="phoneNumber" component={BootstrapPhoneInput} />
+                </Form.Group>
               </Row>
 
               <hr />
@@ -208,7 +213,7 @@ export default function CreateMasjidForm() {
                       <option value="NO_HIGH_LATITUDE_RULE">No High Latitude Rule</option>
                   </FormField>
               </Row>
-              
+             
               <h6 className="mt-4 mb-3">Prayer Adjustments (minutes)</h6>
               <Row>
                 <FormField name="prayerConfig.adjustments.fajrAdjustment" label="Fajr" type="number" />

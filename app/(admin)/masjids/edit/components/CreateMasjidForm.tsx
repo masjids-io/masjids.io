@@ -5,6 +5,8 @@ import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { Button, Card, Col, Form, Row, Alert, Spinner } from 'react-bootstrap'
 import { useRouter } from 'next/navigation'
+import BootstrapPhoneInput from '@/components/forms/BootstrapPhoneInput'
+
 
 // --- FIX: Define a complete and accurate Masjid type ---
 // It's recommended to move this to a shared types file (e.g., @/types/index.ts)
@@ -45,8 +47,7 @@ export type Masjid = {
   updateTime?: string;
 };
 
-
-// Validation Schema using camelCase
+// Updated validation schema - simplified phone number validation since BootstrapPhoneInput handles formatting
 const masjidValidationSchema = Yup.object().shape({
   name: Yup.string().required('Masjid name is required'),
   location: Yup.string().required('Location is required'),
@@ -59,11 +60,10 @@ const masjidValidationSchema = Yup.object().shape({
     city: Yup.string().required('City is required'),
     countryCode: Yup.string().required('Country code is required').length(2, 'Must be 2 characters'),
   }),
-  phoneNumber: Yup.object().shape({
-    countryCode: Yup.string().required('Country code is required'),
-    number: Yup.string().required('Phone number is required'),
-    extension: Yup.string(), // Optional
-  }),
+  // Simplified phone validation - BootstrapPhoneInput returns E.164 format
+  phoneNumber: Yup.string()
+    .required('Phone number is required')
+    .matches(/^\+[1-9]\d{1,14}$/, 'Please enter a valid phone number'),
   prayerConfig: Yup.object().shape({
     method: Yup.string().required('Prayer method is required'),
     fajrAngle: Yup.number().typeError('Must be a number').required('Fajr angle is required'),
@@ -81,6 +81,36 @@ const masjidValidationSchema = Yup.object().shape({
   }),
 });
 
+// Helper function to convert phone object to E.164 string
+const convertPhoneToE164 = (phoneObj: any): string => {
+  if (!phoneObj || typeof phoneObj === 'string') return phoneObj || '';
+  
+  const { countryCode, number } = phoneObj;
+  if (!countryCode || !number) return '';
+  
+  // Clean the number and ensure it starts with country code
+  const cleanNumber = number.replace(/\D/g, '');
+  return `+${countryCode}${cleanNumber}`;
+};
+
+// Helper function to convert E.164 string back to phone object
+const convertE164ToPhoneObject = (e164: string) => {
+  if (!e164 || !e164.startsWith('+')) {
+    return { countryCode: '62', number: '', extension: '' };
+  }
+  
+  // Extract country code (assumes 1-3 digits after +)
+  const match = e164.match(/^\+(\d{1,3})(.*)$/);
+  if (!match) {
+    return { countryCode: '62', number: '', extension: '' };
+  }
+  
+  return {
+    countryCode: match[1],
+    number: match[2],
+    extension: ''
+  };
+};
 
 // The form now accepts props to handle edit mode
 type MasjidFormProps = {
@@ -102,13 +132,12 @@ const collectErrorMessages = (obj: any): string[] => {
     return messages;
 };
 
-
 export default function CreateMasjidForm({ isEditMode = false, initialData = null }: MasjidFormProps) {
   const router = useRouter()
   const [formStatus, setFormStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 
   // Default values using camelCase
-  const defaultValues: Omit<Masjid, 'id' | 'createTime' | 'updateTime'> = {
+  const defaultValues = {
     name: '',
     location: 'Indonesia',
     isVerified: true,
@@ -120,11 +149,7 @@ export default function CreateMasjidForm({ isEditMode = false, initialData = nul
       city: 'Mataram',
       countryCode: 'ID',
     },
-    phoneNumber: {
-      countryCode: '62',
-      number: '',
-      extension: '',
-    },
+    phoneNumber: '', // Now a simple string for E.164 format
     prayerConfig: {
       method: 'MUSLIM_WORLD_LEAGUE',
       fajrAngle: 18,
@@ -142,40 +167,61 @@ export default function CreateMasjidForm({ isEditMode = false, initialData = nul
     },
   }
 
-  // Perform a deep merge to prevent errors with nested objects
-  const formInitialValues = initialData
-    ? {
+  // Prepare initial values based on mode
+  const getInitialValues = () => {
+    if (isEditMode && initialData) {
+      return {
         ...defaultValues,
-        ...initialData,
+        name: initialData.name || '',
+        location: initialData.location || 'Indonesia',
+        isVerified: initialData.isVerified ?? true,
         address: {
-          ...defaultValues.address,
-          ...initialData.address,
+          addressLine1: initialData.address?.addressLine1 || '',
+          addressLine2: initialData.address?.addressLine2 || '',
+          zoneCode: initialData.address?.zoneCode || '',
+          postalCode: initialData.address?.postalCode || '',
+          city: initialData.address?.city || 'Mataram',
+          countryCode: initialData.address?.countryCode || 'ID',
         },
-        phoneNumber: {
-          ...defaultValues.phoneNumber,
-          ...initialData.phoneNumber,
-        },
+        // Convert phone object to E.164 string for the phone input
+        phoneNumber: convertPhoneToE164(initialData.phoneNumber),
         prayerConfig: {
-          ...defaultValues.prayerConfig,
-          ...initialData.prayerConfig,
+          method: initialData.prayerConfig?.method || 'MUSLIM_WORLD_LEAGUE',
+          fajrAngle: initialData.prayerConfig?.fajrAngle || 18,
+          ishaAngle: initialData.prayerConfig?.ishaAngle || 17,
+          ishaInterval: initialData.prayerConfig?.ishaInterval || 0,
+          asrMethod: initialData.prayerConfig?.asrMethod || 'SHAFI_HANBALI_MALIKI',
+          highLatitudeRule: initialData.prayerConfig?.highLatitudeRule || 'MIDDLE_OF_THE_NIGHT',
           adjustments: {
-            ...defaultValues.prayerConfig.adjustments,
-            ...(initialData.prayerConfig?.adjustments || {}),
+            fajrAdjustment: initialData.prayerConfig?.adjustments?.fajrAdjustment || 0,
+            dhuhrAdjustment: initialData.prayerConfig?.adjustments?.dhuhrAdjustment || 0,
+            asrAdjustment: initialData.prayerConfig?.adjustments?.asrAdjustment || 0,
+            maghribAdjustment: initialData.prayerConfig?.adjustments?.maghribAdjustment || 0,
+            ishaAdjustment: initialData.prayerConfig?.adjustments?.ishaAdjustment || 0,
           },
         },
-      }
-    : defaultValues;
+      };
+    }
+    return defaultValues;
+  };
 
-  const handleSubmit = async (values: any, { setSubmitting }: any) => {
+  const handleSubmit = async (values: ReturnType<typeof getInitialValues>, { setSubmitting }: any) => {
     setFormStatus(null)
-    const url = isEditMode ? `/api/masjids/update/${initialData?.id}` : '/api/masjids'
-    const method = isEditMode ? 'PATCH' : 'POST'
-
+    
     try {
+      // Transform the phone number back to your expected object format
+      const transformedValues = {
+        ...values,
+        phoneNumber: convertE164ToPhoneObject(values.phoneNumber)
+      };
+
+      const url = isEditMode ? `/api/masjids/update/${initialData?.id}` : '/api/masjids'
+      const method = isEditMode ? 'PATCH' : 'POST'
+
       const response = await fetch(url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: JSON.stringify(transformedValues),
       })
 
       if (!response.ok) {
@@ -197,8 +243,11 @@ export default function CreateMasjidForm({ isEditMode = false, initialData = nul
       <Field name={name} type={type} as={as === 'select' ? Form.Select : Form.Control}>
         {children}
       </Field>
+      <ErrorMessage name={name} component={Form.Text} className="text-danger" />
     </Form.Group>
   );
+
+  const formInitialValues = getInitialValues();
 
   return (
     <Formik
@@ -236,9 +285,10 @@ export default function CreateMasjidForm({ isEditMode = false, initialData = nul
           <hr />
           <h5 className="mb-3">Phone Number</h5>
           <Row>
-            <FormField name="phoneNumber.countryCode" label="Country Code" />
-            <FormField name="phoneNumber.number" label="Number" />
-            <FormField name="phoneNumber.extension" label="Extension (Optional)" />
+            <Form.Group as={Col} md="12" className="mb-3">
+              <Form.Label>Phone Number</Form.Label>
+              <Field name="phoneNumber" component={BootstrapPhoneInput} />
+            </Form.Group>
           </Row>
 
           <hr />
@@ -290,7 +340,14 @@ export default function CreateMasjidForm({ isEditMode = false, initialData = nul
 
           <div className="mt-4">
             <Button type="submit" disabled={isSubmitting} variant="primary">
-              {isSubmitting ? <Spinner as="span" size="sm" /> : isEditMode ? 'Update Masjid' : 'Create Masjid'}
+              {isSubmitting ? (
+                <>
+                  <Spinner as="span" animation="border" size="sm" /> 
+                  {isEditMode ? 'Updating...' : 'Submitting...'}
+                </>
+              ) : (
+                isEditMode ? 'Update Masjid' : 'Create Masjid'
+              )}
             </Button>
           </div>
 
@@ -316,3 +373,4 @@ export default function CreateMasjidForm({ isEditMode = false, initialData = nul
     </Formik>
   )
 }
+
