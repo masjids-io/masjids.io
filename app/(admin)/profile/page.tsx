@@ -7,6 +7,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import avatar1 from '@/assets/images/users/avatar-1.jpg' // Assuming you have this asset
 import IconifyIcon from '@/components/wrappers/IconifyIcon' // Assuming you have this component
+import BootstrapPhoneInputNoFormik from '@/components/forms/BootstrapPhoneInputNoFormik'
 
 // Updated type to match the data structure from your API
 type UserProfile = {
@@ -16,7 +17,7 @@ type UserProfile = {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  gender: string;
+  gender?: string;
   // Role is not in the update payload, so it can be optional or removed if not displayed
   role?: string;
 };
@@ -40,8 +41,8 @@ const Profile = () => {
         // Corrected the API endpoint to /api/me based on our previous work
         const response = await fetch('/api/profile/me');
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to fetch user data');
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch user data');
         }
         const result = await response.json();
         // The API returns data inside a `getUserResponse` object
@@ -83,12 +84,13 @@ const Profile = () => {
         headers: { 'Content-Type': 'application/json' },
         // Send the fields that can be updated
         body: JSON.stringify({
-            email: userData.email,
-            username: userData.username,
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            phoneNumber: userData.phoneNumber,
-            gender: userData.gender,
+          email: userData.email,
+          username: userData.username,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          phoneNumber: userData.phoneNumber,
+          gender: userData.gender,
+          role: userData.role, // Optional, if you want to allow role updates
         }),
       });
 
@@ -133,43 +135,41 @@ const Profile = () => {
               </Col>
               <Col lg={9} className="bg-light-subtle p-3">
                 <Row>
-                    <Col md={6} className="mb-2">
-                        <label className='mb-2' htmlFor="username">Username</label>
-                        <input id="username" name="username" type="text" className="form-control" value={userData.username} onChange={handleInputChange} />
-                    </Col>
-                    <Col md={6} className="mb-2">
-                        <label className='mb-2' htmlFor="email">Email</label>
-                        <input id="email" name="email" type="email" className="form-control" value={userData.email} onChange={handleInputChange} />
-                    </Col>
-                    <Col md={6} className="mb-2">
-                        <label className='mb-2' htmlFor="firstName">First name</label>
-                        <input id="firstName" name="firstName" type="text" className="form-control" value={userData.firstName} onChange={handleInputChange} />
-                    </Col>
-                    <Col md={6} className="mb-2">
-                        <label className='mb-2' htmlFor="lastName">Last name</label>
-                        <input id="lastName" name="lastName" type="text" className="form-control" value={userData.lastName} onChange={handleInputChange} />
-                    </Col>
-                    <Col md={6} className="mb-2">
-                        <label className='mb-2' htmlFor="phoneNumber">Phone number</label>
-                        <input id="phoneNumber" name="phoneNumber" type="text" className="form-control" value={userData.phoneNumber} onChange={handleInputChange} />
-                    </Col>
-                    <Col md={6} className="mb-2">
-                        <label className='mb-2' htmlFor="gender">Gender</label>
-                        <select name="gender" className="form-select" value={userData.gender} onChange={handleInputChange}>
-                            <option value="GENDER_UNSPECIFIED">Unspecified</option>
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                        </select>
-                    </Col>
+                  <Col md={6} className="mb-2">
+                    <label className='mb-2' htmlFor="username">Username</label>
+                    <input id="username" name="username" type="text" className="form-control" value={userData.username} onChange={handleInputChange} />
+                  </Col>
+                  <Col md={6} className="mb-2">
+                    <label className='mb-2' htmlFor="email">Email</label>
+                    <input id="email" name="email" type="email" className="form-control" value={userData.email} onChange={handleInputChange} />
+                  </Col>
+                  <Col md={6} className="mb-2">
+                    <label className='mb-2' htmlFor="firstName">First name</label>
+                    <input id="firstName" name="firstName" type="text" className="form-control" value={userData.firstName} onChange={handleInputChange} />
+                  </Col>
+                  <Col md={6} className="mb-2">
+                    <label className='mb-2' htmlFor="lastName">Last name</label>
+                    <input id="lastName" name="lastName" type="text" className="form-control" value={userData.lastName} onChange={handleInputChange} />
+                  </Col>
+                  <Col md={6} className="mb-2">
+                    <label className='mb-2' htmlFor="phoneNumber">Phone number</label>
+                    <BootstrapPhoneInputNoFormik
+                      value={userData.phoneNumber}
+                      onChange={(phone) => {
+                        const e164 = `+${phone.replace(/\D/g, '')}`;
+                        setUserData({ ...userData, phoneNumber: e164 });
+                      }}
+                    />
+                  </Col>
                 </Row>
                 <div className="mt-3 text-end">
-                    <Button variant='primary' onClick={handleUpdateProfile} disabled={isSaving}>
-                        {isSaving ? 'Saving...' : 'Save Changes'}
-                    </Button>
+                  <Button variant='primary' onClick={handleUpdateProfile} disabled={isSaving}>
+                    {isSaving ? 'Saving...' : 'Save Changes'}
+                  </Button>
                 </div>
-                 {/* Display feedback messages to the user */}
-                 {error && <div className="alert alert-danger mt-3">{error}</div>}
-                 {saveStatus && <div className="alert alert-success mt-3">{saveStatus}</div>}
+                {/* Display feedback messages to the user */}
+                {error && <div className="alert alert-danger mt-3">{error}</div>}
+                {saveStatus && <div className="alert alert-success mt-3">{saveStatus}</div>}
               </Col>
             </Row>
           </div>

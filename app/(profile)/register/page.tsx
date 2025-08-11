@@ -9,6 +9,11 @@ import axios from 'axios';
 // CHANGE 2: Import useRouter from 'next/navigation' instead of 'next/router'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+// MENJADI SEPERTI INI:
+import BootstrapPhoneInput from '@/components/forms/BootstrapPhoneInput';
+import { isPossiblePhoneNumber, parsePhoneNumberFromString } from 'libphonenumber-js/min';
+import { signIn } from 'next-auth/react';
+
 
 // Define the validation schema with Yup
 const RegistrationSchema = Yup.object().shape({
@@ -24,9 +29,17 @@ const RegistrationSchema = Yup.object().shape({
         .email('Invalid email address')
         .required('Email is required'),
     phoneNumber: Yup.string()
-        .matches(/^[0-9]+$/, "Must be only digits")
-        .min(8, 'Must be at least 8 digits')
-        .required('Phone number is required'),
+        .required('Phone number is required')
+        .test('is-phone-valid', 'Phone number is not valid', (value) => {
+            if (!value) return false;
+            try {
+                const phoneObj = parsePhoneNumberFromString(value);
+                return phoneObj?.isValid() || false;
+            } catch {
+                return false;
+            }
+        }),
+
     gender: Yup.string()
         .oneOf(['MALE', 'FEMALE'], 'Please select a gender')
         .required('Gender is required'),
@@ -57,6 +70,8 @@ export default function Register() {
         validationSchema: RegistrationSchema,
         onSubmit: async (values, { setSubmitting }) => {
             setFormError(''); // Clear previous errors
+            // console.log('Form values:', values);
+
             try {
                 // Prepare data and send with Axios
                 const payload = {
@@ -73,8 +88,21 @@ export default function Register() {
                 const apiUrl = `/api/register`;
                 const response = await axios.post(apiUrl, payload);
 
-                console.log('Registration successful:', response.data);
-                router.push('/login');
+                // console.log('Registration successful:', response.data);
+                const result = await signIn('credentials', {
+                    // Important: Prevent automatic redirect to handle the result manually
+                    redirect: false,
+                    email: values.email,
+                    password: values.password,
+                });
+
+                if (result?.ok) {
+                    // On success, redirect to the home page
+                    window.location.href = '/home';
+                } else {
+                    // On failure, display a user-friendly error message
+                    // setError('The email or password you entered is incorrect. Please try again.');
+                }
 
             } catch (error) {
                 // This is a good way to handle Axios errors specifically
@@ -114,7 +142,7 @@ export default function Register() {
                             <div className="md:container py-48">
                                 <h1 className="text-4xl md:text-3xl">Register</h1>
                                 <p className="mt-16">Already have an account? <Link className="decoration-none text-accent fw-600" href="/login">Login here</Link></p>
-                                
+
                                 <form className="contact-form row y-gap-32 pt-48" onSubmit={formik.handleSubmit}>
                                     {/* First Name */}
                                     <div className="col-12 col-md-6">
@@ -136,12 +164,20 @@ export default function Register() {
 
                                     {/* Phone Number */}
                                     <div className="col-12 col-md-6">
-                                        <input type="text" name="phoneNumber" placeholder="Phone number" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.phoneNumber} />
-                                        {formik.touched.phoneNumber && formik.errors.phoneNumber ? <div className="text-danger text-sm mt-1">{formik.errors.phoneNumber}</div> : null}
+                                        <BootstrapPhoneInput
+                                            field={{
+                                                name: 'phoneNumber',
+                                                value: formik.values.phoneNumber,
+                                                onChange: formik.handleChange,
+                                                onBlur: formik.handleBlur
+                                            }}
+                                            form={formik}
+
+                                        />
                                     </div>
 
                                     {/* Role */}
-  
+
 
                                     {/* Gender */}
                                     <div className="col-12 col-md-6">
