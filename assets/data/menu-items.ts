@@ -18,6 +18,16 @@ export const MENU_ITEMS: MenuItemType[] = [
     url: '/home',
   },
     {
+    key: 'event-management',
+    icon: 'ri:calendar-event-line',
+    label: 'Event Management',
+    badge: {
+      text: '',
+      variant: 'success',
+    },
+    url: '/event-management',
+  },
+    {
     key: 'menu',
     label: 'admin',
     isTitle: true,
@@ -37,7 +47,7 @@ export const MENU_ITEMS: MenuItemType[] = [
       {
     key: 'users-managements',
     icon: 'material-symbols:supervised-user-circle',
-    label: 'User Managements',
+    label: 'User Management',
     badge: {
       text: '',
       variant: 'success',
