@@ -93,3 +93,38 @@ File: Main Css File
 @import "custom/plugins/cropper";
 @import "custom/plugins/vector-map";
 @import "custom-react";
+
+
+.fc-popover {
+  background-color: var(--bs-body-bg, white); /* Uses Bootstrap's background variable, with white as a fallback */
+  border: 1px solid var(--bs-border-color, #dee2e6); /* Optional: Adds a border for better definition */
+  z-index: 1080; /* Ensures it appears above other content, like Bootstrap modals */
+}
+
+// In app.scss
+
+/*
+ * Style for all FullCalendar dot events
+*/
+.fc-daygrid-dot-event {
+  // Add a background and some padding
+ background-color: #007aff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  
+  // Make the text color consistent for readability
+  .fc-event-title,
+  .fc-event-time {
+    color: #0e0e0e; // A darker blue
+  }
+}
+
+.fc-list-event {
+ 
+  color: var(--bs-light); // ensures text is readable on primary background
+}
+
+.fc-list-event a {
+
+  color: var(--bs-light); // ensure event link text is also readable
+}
